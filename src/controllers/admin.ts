@@ -20,10 +20,10 @@ const postAddProduct = (
   res: express.Response,
   _next: express.NextFunction
 ) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
+  const title: string = req.body.title;
+  const imageUrl: string = req.body.imageUrl;
+  const price: string = req.body.price;
+  const description: string = req.body.description;
   const product = new Product.Products(title, imageUrl, price, description);
   product.save();
   res.redirect('/');
@@ -33,7 +33,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
   Product.Products.fetchAll((products: []) => {
     res.render('admin/products', {
       prods: products,
-      pageTitle: 'Admin Products',
+      pageTitle: 'ADMIN PRODUCTS',
       path: '/admin/products',
     });
   });

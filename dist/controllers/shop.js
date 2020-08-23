@@ -17,7 +17,7 @@ const getProducts = (_req, res, _next) => {
     product_1.default.Products.fetchAll((products) => {
         res.render('shop/product-list', {
             prods: products,
-            pageTitle: 'All Products',
+            pageTitle: 'ALL PRODUCTS',
             path: '/products',
         });
     });
@@ -25,19 +25,19 @@ const getProducts = (_req, res, _next) => {
 const getCart = (_req, res, _next) => {
     res.render('shop/cart', {
         path: '/cart',
-        pageTitle: 'Your Cart',
+        pageTitle: 'YOUR CART',
     });
 };
 const getOrders = (_req, res, _next) => {
     res.render('shop/orders', {
         path: '/orders',
-        pageTitle: 'Your Orders',
+        pageTitle: 'YOUR ORDERS',
     });
 };
 const getCheckout = (_req, res, _next) => {
     res.render('shop/checkout', {
         path: '/checkout',
-        pageTitle: 'Checkout',
+        pageTitle: 'CHECKOUT',
     });
 };
 exports.default = module.exports = {

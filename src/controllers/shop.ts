@@ -15,7 +15,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
   Product.Products.fetchAll((products: []) => {
     res.render('shop/product-list', {
       prods: products,
-      pageTitle: 'All Products',
+      pageTitle: 'ALL PRODUCTS',
       path: '/products',
     });
   });
@@ -24,21 +24,21 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
 const getCart = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.render('shop/cart', {
     path: '/cart',
-    pageTitle: 'Your Cart',
+    pageTitle: 'YOUR CART',
   });
 };
 
 const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.render('shop/orders', {
     path: '/orders',
-    pageTitle: 'Your Orders',
+    pageTitle: 'YOUR ORDERS',
   });
 };
 
 const getCheckout = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.render('shop/checkout', {
     path: '/checkout',
-    pageTitle: 'Checkout',
+    pageTitle: 'CHECKOUT',
   });
 };
 

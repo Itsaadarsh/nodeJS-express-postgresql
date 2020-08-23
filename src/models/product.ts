@@ -42,7 +42,7 @@ class Products {
     });
   }
 
-  static fetchAll(callback: any) {
+  static fetchAll(callback: Function) {
     getProductsFromFile(callback);
   }
 }
