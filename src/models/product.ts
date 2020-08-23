@@ -1,11 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-const p = path.join(__dirname, 'data', 'products.json');
-console.log(p);
+const p = path.join(__dirname, '../', '../', 'data', 'products.json');
 
-const getProductsFromFile = (callback: any) => {
-  fs.readFile(p, (err, fileContent) => {
+const getProductsFromFile = (callback: Function) => {
+  fs.readFile(p, (err, fileContent: any) => {
     if (err) {
       callback([]);
     } else {
@@ -16,20 +15,28 @@ const getProductsFromFile = (callback: any) => {
 
 interface Item {
   title: string;
-  imgURL: string;
+  imageUrl: string;
   description: string;
   price: string;
 }
 
 class Products {
-  constructor(public title: string, public imgURL: string, public description: string, public price: string) {}
+  constructor(
+    public title: string,
+    public imageUrl: string,
+    public price: string,
+    public description: string
+  ) {}
 
   save() {
     getProductsFromFile((products: Item[]) => {
-      products.push({ title: this.title, imgURL: this.imgURL, description: this.description, price: this.price });
-      console.log(products);
+      products.push({
+        title: this.title,
+        imageUrl: this.imageUrl,
+        description: this.description,
+        price: this.price,
+      });
       fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log('This is the error');
         console.log(err);
       });
     });

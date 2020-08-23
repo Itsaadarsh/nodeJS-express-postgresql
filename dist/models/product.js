@@ -5,8 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const p = path_1.default.join(__dirname, 'data', 'products.json');
-console.log(p);
+const p = path_1.default.join(__dirname, '../', '../', 'data', 'products.json');
 const getProductsFromFile = (callback) => {
     fs_1.default.readFile(p, (err, fileContent) => {
         if (err) {
@@ -18,18 +17,21 @@ const getProductsFromFile = (callback) => {
     });
 };
 class Products {
-    constructor(title, imgURL, description, price) {
+    constructor(title, imageUrl, price, description) {
         this.title = title;
-        this.imgURL = imgURL;
-        this.description = description;
+        this.imageUrl = imageUrl;
         this.price = price;
+        this.description = description;
     }
     save() {
         getProductsFromFile((products) => {
-            products.push({ title: this.title, imgURL: this.imgURL, description: this.description, price: this.price });
-            console.log(products);
+            products.push({
+                title: this.title,
+                imageUrl: this.imageUrl,
+                description: this.description,
+                price: this.price,
+            });
             fs_1.default.writeFile(p, JSON.stringify(products), (err) => {
-                console.log('This is the error');
                 console.log(err);
             });
         });

@@ -1,7 +1,11 @@
 import Product from '../models/product';
 import express from 'express';
 
-const getAddProduct = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+const getAddProduct = (
+  _req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
   res.render('admin/add-product', {
     pageTitle: 'ADD PRODUCTS',
     path: '/admin/add-product',
@@ -11,12 +15,16 @@ const getAddProduct = (_req: express.Request, res: express.Response, _next: expr
   });
 };
 
-const postAddProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+const postAddProduct = (
+  req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
   const title = req.body.title;
-  const imgURL = req.body.imageUrl;
+  const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product.Products(title, imgURL, price, description);
+  const product = new Product.Products(title, imageUrl, price, description);
   product.save();
   res.redirect('/');
 };
