@@ -1,22 +1,13 @@
 import express from 'express';
 const router = express.Router();
+import adminController from '../controllers/admin';
 
-const products: Product[] = [];
+router.get('/add-product', adminController.getAddProduct);
 
-interface Product {
-  title: string;
-}
+router.get('/products', adminController.getProducts);
 
-router.get('/add-product', (_req, res, _next) => {
-  res.render('add-product', { pageTitle: 'ADD PRODUCTS' });
-});
-router.post('/add-product', (req, res, _next) => {
-  res.redirect('/');
-  products.push({ title: req.body.title });
-  console.log(products);
-});
+router.post('/add-product', adminController.postAddProduct);
 
 export default module.exports = {
   router,
-  products,
 };

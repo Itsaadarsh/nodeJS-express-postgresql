@@ -5,16 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const home_1 = __importDefault(require("./routes/home"));
-const add_products_1 = __importDefault(require("./routes/add-products"));
+const shop_1 = __importDefault(require("./routes/shop"));
+const admin_1 = __importDefault(require("./routes/admin"));
+const error_1 = __importDefault(require("./controllers/error"));
 const app = express_1.default();
 app.set('view engine', 'ejs');
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static('dist'));
-app.use('/admin', add_products_1.default.router);
-app.use(home_1.default);
-app.use((_req, res, _next) => {
-    res.render('404', { pageTitle: '404' });
-});
+app.use('/admin', admin_1.default.router);
+app.use(shop_1.default);
+app.use(error_1.default.error404);
 app.listen(8080), console.log('Listening at 8080');
 //# sourceMappingURL=index.js.map

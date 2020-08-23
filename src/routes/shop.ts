@@ -1,13 +1,15 @@
 import express from 'express';
 const router = express.Router();
-import adminData from './admin';
+import shopController from '../controllers/shop';
 
-router.get('/', (_req, res, _next) => {
-  res.render('shop', {
-    pageTitle: 'SHOP',
-    prods: adminData.products,
-    hasProducts: adminData.products.length > 0,
-  });
-});
+router.get('/', shopController.getHome);
+
+router.get('/products', shopController.getProducts);
+
+router.get('/cart', shopController.getCart);
+
+router.get('/orders', shopController.getOrders);
+
+router.get('/checkout', shopController.getCheckout);
 
 export default module.exports = router;

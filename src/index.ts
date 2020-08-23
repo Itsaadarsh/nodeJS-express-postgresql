@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import homeRouter from './routes/shop';
 import adminData from './routes/admin';
+import errorRoute from './controllers/error';
 
 const app = express();
 
@@ -11,8 +12,6 @@ app.use(express.static('dist'));
 
 app.use('/admin', adminData.router);
 app.use(homeRouter);
-app.use((_req, res, _next) => {
-  res.render('404', { pageTitle: '404' });
-});
+app.use(errorRoute.error404);
 
 app.listen(8080), console.log('Listening at 8080');
