@@ -24,12 +24,14 @@ class Products {
         this.description = description;
     }
     save() {
+        this.id = Math.floor(Math.random() * 100000).toString();
         getProductsFromFile((products) => {
             products.push({
                 title: this.title,
                 imageUrl: this.imageUrl,
                 description: this.description,
                 price: this.price,
+                id: this.id,
             });
             fs_1.default.writeFile(p, JSON.stringify(products), (err) => {
                 console.log(err);
@@ -38,6 +40,12 @@ class Products {
     }
     static fetchAll(callback) {
         getProductsFromFile(callback);
+    }
+    static findById(id, _callback) {
+        getProductsFromFile((products) => {
+            const product = products.find((p) => p.id === id);
+            console.log(product);
+        });
     }
 }
 exports.default = module.exports = {

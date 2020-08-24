@@ -1,4 +1,4 @@
-import Product from '../models/product';
+import Product, { Item } from '../models/product';
 import express from 'express';
 
 const getAddProduct = (
@@ -30,7 +30,7 @@ const postAddProduct = (
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  Product.Products.fetchAll((products: []) => {
+  Product.Products.fetchAll((products: Item[]) => {
     res.render('admin/products', {
       prods: products,
       pageTitle: 'ADMIN PRODUCTS',

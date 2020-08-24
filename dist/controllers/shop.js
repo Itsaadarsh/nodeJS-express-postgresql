@@ -22,6 +22,12 @@ const getProducts = (_req, res, _next) => {
         });
     });
 };
+const getProduct = (req, res, _next) => {
+    const prodID = req.params.productId;
+    product_1.default.Products.findById(prodID, (_products) => {
+        res.redirect('/');
+    });
+};
 const getCart = (_req, res, _next) => {
     res.render('shop/cart', {
         path: '/cart',
@@ -46,5 +52,6 @@ exports.default = module.exports = {
     getCart,
     getOrders,
     getCheckout,
+    getProduct,
 };
 //# sourceMappingURL=shop.js.map

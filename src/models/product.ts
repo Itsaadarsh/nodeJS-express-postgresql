@@ -13,14 +13,16 @@ const getProductsFromFile = (callback: Function) => {
   });
 };
 
-interface Item {
+export interface Item {
   title: string;
   imageUrl: string;
   description: string;
   price: string;
+  id: string;
 }
 
 class Products {
+  public id: string;
   constructor(
     public title: string,
     public imageUrl: string,
@@ -29,12 +31,14 @@ class Products {
   ) {}
 
   save() {
+    this.id = Math.floor(Math.random() * 100000).toString();
     getProductsFromFile((products: Item[]) => {
       products.push({
         title: this.title,
         imageUrl: this.imageUrl,
         description: this.description,
         price: this.price,
+        id: this.id,
       });
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.log(err);
@@ -44,6 +48,13 @@ class Products {
 
   static fetchAll(callback: Function) {
     getProductsFromFile(callback);
+  }
+
+  static findById(id: string, _callback: Function) {
+    getProductsFromFile((products: Item[]) => {
+      const product = products.find((p) => p.id === id);
+      console.log(product);
+    });
   }
 }
 

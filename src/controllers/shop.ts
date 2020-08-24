@@ -1,8 +1,8 @@
-import Product from '../models/product';
+import Product, { Item } from '../models/product';
 import express from 'express';
 
 const getHome = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  Product.Products.fetchAll((products: []) => {
+  Product.Products.fetchAll((products: Item[]) => {
     res.render('shop/index', {
       prods: products,
       pageTitle: 'SHOP',
@@ -12,12 +12,19 @@ const getHome = (_req: express.Request, res: express.Response, _next: express.Ne
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  Product.Products.fetchAll((products: []) => {
+  Product.Products.fetchAll((products: Item[]) => {
     res.render('shop/product-list', {
       prods: products,
       pageTitle: 'ALL PRODUCTS',
       path: '/products',
     });
+  });
+};
+
+const getProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const prodID = req.params.productId;
+  Product.Products.findById(prodID, (_products: Item) => {
+    res.redirect('/');
   });
 };
 
@@ -48,4 +55,5 @@ export default module.exports = {
   getCart,
   getOrders,
   getCheckout,
+  getProduct,
 };
