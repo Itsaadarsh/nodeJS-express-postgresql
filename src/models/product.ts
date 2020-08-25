@@ -50,10 +50,10 @@ class Products {
     getProductsFromFile(callback);
   }
 
-  static findById(id: string, _callback: Function) {
+  static findById(id: string, callback: Function) {
     getProductsFromFile((products: Item[]) => {
       const product = products.find((p) => p.id === id);
-      console.log(product);
+      callback(product);
     });
   }
 }

@@ -6,12 +6,10 @@ const getAddProduct = (
   res: express.Response,
   _next: express.NextFunction
 ) => {
-  res.render('admin/add-product', {
+  res.render('admin/edit-product', {
     pageTitle: 'ADD PRODUCTS',
     path: '/admin/add-product',
-    formCSS: true,
-    productCSS: true,
-    activeAddProduct: true,
+    editing: false,
   });
 };
 

@@ -41,10 +41,10 @@ class Products {
     static fetchAll(callback) {
         getProductsFromFile(callback);
     }
-    static findById(id, _callback) {
+    static findById(id, callback) {
         getProductsFromFile((products) => {
             const product = products.find((p) => p.id === id);
-            console.log(product);
+            callback(product);
         });
     }
 }

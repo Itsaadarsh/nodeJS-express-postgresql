@@ -5,12 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = __importDefault(require("../models/product"));
 const getAddProduct = (_req, res, _next) => {
-    res.render('admin/add-product', {
+    res.render('admin/edit-product', {
         pageTitle: 'ADD PRODUCTS',
         path: '/admin/add-product',
-        formCSS: true,
-        productCSS: true,
-        activeAddProduct: true,
+        editing: false,
     });
 };
 const postAddProduct = (req, res, _next) => {

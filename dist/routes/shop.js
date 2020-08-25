@@ -10,6 +10,8 @@ router.get('/', shop_1.default.getHome);
 router.get('/products', shop_1.default.getProducts);
 router.get('/products/:productId', shop_1.default.getProduct);
 router.get('/cart', shop_1.default.getCart);
+router.post('/cart', shop_1.default.postCart);
+router.post('/cart-delete-item', shop_1.default.postDeleteCart);
 router.get('/orders', shop_1.default.getOrders);
 router.get('/checkout', shop_1.default.getCheckout);
 exports.default = module.exports = router;
