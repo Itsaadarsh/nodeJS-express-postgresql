@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import cart from './cart';
 
 const p = path.join(__dirname, '../', '../', 'data', 'products.json');
 
@@ -37,7 +38,9 @@ class Products implements Item {
         const updatePro = [...products];
         updatePro[existingProIndex] = this;
         fs.writeFile(p, JSON.stringify(updatePro), (err) => {
-          console.log(err);
+          if (!err) {
+            cart.Cart.deleteCart(this.id!, this.price);
+          }
         });
       } else {
         this.id = Math.floor(Math.random() * 100000).toString();
@@ -63,6 +66,22 @@ class Products implements Item {
     getProductsFromFile((products: Item[]) => {
       const product = products.find((p) => p.id === id);
       callback(product);
+    });
+  }
+
+  static deletePro(id: string) {
+    getProductsFromFile((products: Item[]) => {
+      const delProIndex = products.findIndex((p) => p.id === id);
+      const delPro = [...products];
+      if (delProIndex > -1) {
+        var prodPrice = delPro[delProIndex].price;
+        delPro.splice(delProIndex, 1);
+      }
+      fs.writeFile(p, JSON.stringify(delPro), (err) => {
+        if (!err) {
+          cart.Cart.deleteCart(id, prodPrice);
+        }
+      });
     });
   }
 }

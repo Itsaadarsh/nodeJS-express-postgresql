@@ -57,7 +57,11 @@ const postEditProduct = (req, res, _next) => {
     Uproduct.save();
     res.redirect('/admin/products');
 };
-const postDeleteProduct = (_req, res, _next) => { };
+const postDeleteProduct = (req, res, _next) => {
+    const prodId = req.body.productId;
+    product_1.default.Products.deletePro(prodId);
+    res.redirect('/admin/products');
+};
 exports.default = module.exports = {
     getAddProduct,
     getProducts,

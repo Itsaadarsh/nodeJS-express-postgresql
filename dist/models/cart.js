@@ -47,13 +47,23 @@ class Cart {
         fs_1.default.readFile(p, (_err, fileContent) => {
             var delCart = JSON.parse(fileContent);
             const delPro = delCart.products.findIndex((p) => p.id === id);
+            const upPro = delCart.products.findIndex((p) => p.id === id);
             if (delPro > -1) {
                 delCart.totalPrice = delCart.totalPrice - delCart.products[delPro].qty * +productPrice;
                 delCart.products.splice(delPro, 1);
+                console.log('deleted from 1');
+                fs_1.default.writeFile(p, JSON.stringify(delCart), (err) => {
+                    console.log(err);
+                });
             }
-            fs_1.default.writeFile(p, JSON.stringify(delCart), (err) => {
-                console.log(err);
-            });
+            if (upPro > -1) {
+                delCart.products = [...delCart.products];
+                delCart.totalPrice = +productPrice;
+                console.log('deleted from 2');
+                fs_1.default.writeFile(p, JSON.stringify(delCart), (err) => {
+                    console.log(err);
+                });
+            }
         });
     }
 }

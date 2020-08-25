@@ -76,10 +76,14 @@ const postEditProduct = (
 };
 
 const postDeleteProduct = (
-  _req: express.Request,
+  req: express.Request,
   res: express.Response,
   _next: express.NextFunction
-) => {};
+) => {
+  const prodId = req.body.productId;
+  Product.Products.deletePro(prodId);
+  res.redirect('/admin/products');
+};
 
 export default module.exports = {
   getAddProduct,
