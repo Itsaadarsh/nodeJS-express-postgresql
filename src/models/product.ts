@@ -18,31 +18,40 @@ export interface Item {
   imageUrl: string;
   description: string;
   price: string;
-  id: string;
+  id?: string;
 }
 
-class Products {
-  public id: string;
+class Products implements Item {
   constructor(
     public title: string,
     public imageUrl: string,
     public price: string,
-    public description: string
+    public description: string,
+    public id?: string
   ) {}
 
   save() {
-    this.id = Math.floor(Math.random() * 100000).toString();
     getProductsFromFile((products: Item[]) => {
-      products.push({
-        title: this.title,
-        imageUrl: this.imageUrl,
-        description: this.description,
-        price: this.price,
-        id: this.id,
-      });
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
+      if (this.id) {
+        const existingProIndex = products.findIndex((p) => p.id === this.id);
+        const updatePro = [...products];
+        updatePro[existingProIndex] = this;
+        fs.writeFile(p, JSON.stringify(updatePro), (err) => {
+          console.log(err);
+        });
+      } else {
+        this.id = Math.floor(Math.random() * 100000).toString();
+        products.push({
+          title: this.title,
+          imageUrl: this.imageUrl,
+          description: this.description,
+          price: this.price,
+          id: this.id,
+        });
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          console.log(err);
+        });
+      }
     });
   }
 

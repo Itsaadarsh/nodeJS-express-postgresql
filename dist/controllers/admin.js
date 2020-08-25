@@ -16,7 +16,7 @@ const postAddProduct = (req, res, _next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    const product = new product_1.default.Products(title, imageUrl, price, description);
+    const product = new product_1.default.Products(title, imageUrl, price, description, undefined);
     product.save();
     res.redirect('/');
 };
@@ -47,10 +47,23 @@ const getEditProduct = (req, res, _next) => {
         });
     });
 };
+const postEditProduct = (req, res, _next) => {
+    const UprodId = req.body.productId;
+    const Utitle = req.body.title;
+    const UimageUrl = req.body.imageUrl;
+    const Uprice = req.body.price;
+    const Udescription = req.body.description;
+    const Uproduct = new product_1.default.Products(Utitle, UimageUrl, Uprice, Udescription, UprodId);
+    Uproduct.save();
+    res.redirect('/admin/products');
+};
+const postDeleteProduct = (_req, res, _next) => { };
 exports.default = module.exports = {
     getAddProduct,
     getProducts,
     postAddProduct,
     getEditProduct,
+    postEditProduct,
+    postDeleteProduct,
 };
 //# sourceMappingURL=admin.js.map

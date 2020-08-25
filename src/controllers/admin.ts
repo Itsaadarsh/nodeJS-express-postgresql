@@ -22,7 +22,7 @@ const postAddProduct = (
   const imageUrl: string = req.body.imageUrl;
   const price: string = req.body.price;
   const description: string = req.body.description;
-  const product = new Product.Products(title, imageUrl, price, description);
+  const product = new Product.Products(title, imageUrl, price, description, undefined);
   product.save();
   res.redirect('/');
 };
@@ -60,9 +60,32 @@ const getEditProduct = (
   });
 };
 
+const postEditProduct = (
+  req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
+  const UprodId: string = req.body.productId;
+  const Utitle: string = req.body.title;
+  const UimageUrl: string = req.body.imageUrl;
+  const Uprice: string = req.body.price;
+  const Udescription: string = req.body.description;
+  const Uproduct = new Product.Products(Utitle, UimageUrl, Uprice, Udescription, UprodId);
+  Uproduct.save();
+  res.redirect('/admin/products');
+};
+
+const postDeleteProduct = (
+  _req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {};
+
 export default module.exports = {
   getAddProduct,
   getProducts,
   postAddProduct,
   getEditProduct,
+  postEditProduct,
+  postDeleteProduct,
 };

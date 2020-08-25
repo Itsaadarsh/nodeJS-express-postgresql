@@ -17,25 +17,36 @@ const getProductsFromFile = (callback) => {
     });
 };
 class Products {
-    constructor(title, imageUrl, price, description) {
+    constructor(title, imageUrl, price, description, id) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
         this.description = description;
+        this.id = id;
     }
     save() {
-        this.id = Math.floor(Math.random() * 100000).toString();
         getProductsFromFile((products) => {
-            products.push({
-                title: this.title,
-                imageUrl: this.imageUrl,
-                description: this.description,
-                price: this.price,
-                id: this.id,
-            });
-            fs_1.default.writeFile(p, JSON.stringify(products), (err) => {
-                console.log(err);
-            });
+            if (this.id) {
+                const existingProIndex = products.findIndex((p) => p.id === this.id);
+                const updatePro = [...products];
+                updatePro[existingProIndex] = this;
+                fs_1.default.writeFile(p, JSON.stringify(updatePro), (err) => {
+                    console.log(err);
+                });
+            }
+            else {
+                this.id = Math.floor(Math.random() * 100000).toString();
+                products.push({
+                    title: this.title,
+                    imageUrl: this.imageUrl,
+                    description: this.description,
+                    price: this.price,
+                    id: this.id,
+                });
+                fs_1.default.writeFile(p, JSON.stringify(products), (err) => {
+                    console.log(err);
+                });
+            }
         });
     }
     static fetchAll(callback) {
