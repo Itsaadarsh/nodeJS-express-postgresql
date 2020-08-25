@@ -29,9 +29,28 @@ const getProducts = (_req, res, _next) => {
         });
     });
 };
+const getEditProduct = (req, res, _next) => {
+    const prodId = req.params.productId;
+    const edit = req.query.edit;
+    if (edit === 'false') {
+        res.redirect('/');
+    }
+    product_1.default.Products.findById(prodId, (product) => {
+        if (!product) {
+            res.redirect('/');
+        }
+        res.render('admin/edit-product', {
+            pageTitle: 'Edit Product',
+            path: '/admin/edit-product',
+            editing: edit,
+            product: product,
+        });
+    });
+};
 exports.default = module.exports = {
     getAddProduct,
     getProducts,
     postAddProduct,
+    getEditProduct,
 };
 //# sourceMappingURL=admin.js.map

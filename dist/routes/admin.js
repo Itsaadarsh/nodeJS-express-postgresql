@@ -9,6 +9,7 @@ const admin_1 = __importDefault(require("../controllers/admin"));
 router.get('/add-product', admin_1.default.getAddProduct);
 router.get('/products', admin_1.default.getProducts);
 router.post('/add-product', admin_1.default.postAddProduct);
+router.get('/edit-product/:productId', admin_1.default.getEditProduct);
 exports.default = module.exports = {
     router,
 };
