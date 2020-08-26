@@ -39,7 +39,7 @@ class Products implements Item {
         updatePro[existingProIndex] = this;
         fs.writeFile(p, JSON.stringify(updatePro), (err) => {
           if (!err) {
-            cart.Cart.deleteCart(this.id!, this.price);
+            cart.Cart.upGrade(this.id!, this.price);
           }
         });
       } else {

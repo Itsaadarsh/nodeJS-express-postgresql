@@ -33,7 +33,7 @@ class Products {
                 updatePro[existingProIndex] = this;
                 fs_1.default.writeFile(p, JSON.stringify(updatePro), (err) => {
                     if (!err) {
-                        cart_1.default.Cart.deleteCart(this.id, this.price);
+                        cart_1.default.Cart.upGrade(this.id, this.price);
                     }
                 });
             }

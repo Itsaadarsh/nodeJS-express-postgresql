@@ -43,23 +43,30 @@ class Cart {
             }
         });
     }
+    static upGrade(id, productPrice) {
+        fs_1.default.readFile(p, (_err, fileContent) => {
+            var upCart = JSON.parse(fileContent);
+            const upPro = upCart.products.findIndex((p) => p.id === id);
+            if (upPro > -1) {
+                upCart.products = [...upCart.products];
+                upCart.totalPrice = 0;
+                for (let i in upCart.products) {
+                    const upIndPrice = upCart.products[i].qty * +productPrice;
+                    upCart.totalPrice += upIndPrice;
+                }
+                fs_1.default.writeFile(p, JSON.stringify(upCart), (err) => {
+                    console.log(err);
+                });
+            }
+        });
+    }
     static deleteCart(id, productPrice) {
         fs_1.default.readFile(p, (_err, fileContent) => {
             var delCart = JSON.parse(fileContent);
             const delPro = delCart.products.findIndex((p) => p.id === id);
-            const upPro = delCart.products.findIndex((p) => p.id === id);
             if (delPro > -1) {
                 delCart.totalPrice = delCart.totalPrice - delCart.products[delPro].qty * +productPrice;
                 delCart.products.splice(delPro, 1);
-                console.log('deleted from 1');
-                fs_1.default.writeFile(p, JSON.stringify(delCart), (err) => {
-                    console.log(err);
-                });
-            }
-            if (upPro > -1) {
-                delCart.products = [...delCart.products];
-                delCart.totalPrice = +productPrice;
-                console.log('deleted from 2');
                 fs_1.default.writeFile(p, JSON.stringify(delCart), (err) => {
                     console.log(err);
                 });

@@ -50,24 +50,31 @@ class Cart {
     });
   }
 
+  static upGrade(id: string, productPrice: string) {
+    fs.readFile(p, (_err, fileContent: any) => {
+      var upCart: CartInterface = JSON.parse(fileContent);
+      const upPro: number = upCart.products.findIndex((p) => p.id === id)!;
+      if (upPro > -1) {
+        upCart.products = [...upCart.products];
+        upCart.totalPrice = 0;
+        for (let i in upCart.products) {
+          const upIndPrice = upCart.products[i].qty * +productPrice;
+          upCart.totalPrice += upIndPrice;
+        }
+        fs.writeFile(p, JSON.stringify(upCart), (err) => {
+          console.log(err);
+        });
+      }
+    });
+  }
+
   static deleteCart(id: string, productPrice: string) {
     fs.readFile(p, (_err, fileContent: any) => {
       var delCart: CartInterface = JSON.parse(fileContent);
       const delPro: number = delCart.products.findIndex((p) => p.id === id)!;
-      const upPro: number = delCart.products.findIndex((p) => p.id === id)!;
       if (delPro > -1) {
         delCart.totalPrice = delCart.totalPrice - delCart.products[delPro].qty * +productPrice;
         delCart.products.splice(delPro, 1);
-        console.log('deleted from 1');
-
-        fs.writeFile(p, JSON.stringify(delCart), (err) => {
-          console.log(err);
-        });
-      }
-      if (upPro > -1) {
-        delCart.products = [...delCart.products];
-        delCart.totalPrice = +productPrice;
-        console.log('deleted from 2');
         fs.writeFile(p, JSON.stringify(delCart), (err) => {
           console.log(err);
         });
