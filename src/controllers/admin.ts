@@ -1,6 +1,6 @@
 import Product, { Item } from '../models/product';
 import express from 'express';
-// Just checking in localstorage
+
 const getAddProduct = (
   _req: express.Request,
   res: express.Response,
