@@ -13,6 +13,5 @@ app.use(express.static('dist'));
 app.use('/admin', adminData.router);
 app.use(homeRouter);
 app.use(errorRoute.error404);
-console.log('hey');
 
 app.listen(8080), console.log('Listening at 8080');
