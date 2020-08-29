@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "sequelize": "^6.3.4",
     "typescript": "^4.0.2"
   }
 }
