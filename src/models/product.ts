@@ -1,16 +1,30 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+export interface Item {
+  title: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+}
+
 @Entity()
-export class User {
+class Product implements Item {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  firstName: string;
+  @Column('varchar', { nullable: false, length: 100 })
+  title: string;
 
-  @Column()
-  lastName: string;
+  @Column('numeric', { nullable: false })
+  price: number;
 
-  @Column()
-  age: number;
+  @Column('text', { nullable: false })
+  imageUrl: string;
+
+  @Column('varchar', { nullable: false, length: 255 })
+  description: string;
 }
+
+export default module.exports = {
+  Product,
+};

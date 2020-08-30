@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = __importDefault(require("../models/product"));
+const typeorm_1 = require("typeorm");
+const userRepo = typeorm_1.getRepository(product_1.default.Product);
 const getAddProduct = (_req, res, _next) => {
     res.render('admin/edit-product', {
         pageTitle: 'ADD PRODUCTS',
@@ -16,58 +18,29 @@ const postAddProduct = (req, res, _next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    const product = new product_1.default.Products(title, imageUrl, price, description, undefined);
-    product.save();
+    const product = new product_1.default.Product();
+    product.title = title;
+    product.imageUrl = imageUrl;
+    product.price = price;
+    product.description = description;
+    userRepo.save(product);
     res.redirect('/');
 };
 const getProducts = (_req, res, _next) => {
-    product_1.default.Products.fetchAll((products) => {
+    userRepo
+        .find({ select: ['title', 'imageUrl', 'price', 'description'] })
+        .then((products) => {
         res.render('admin/products', {
             prods: products,
             pageTitle: 'ADMIN PRODUCTS',
             path: '/admin/products',
         });
-    });
-};
-const getEditProduct = (req, res, _next) => {
-    const prodId = req.params.productId;
-    const edit = req.query.edit;
-    if (edit === 'false') {
-        res.redirect('/');
-    }
-    product_1.default.Products.findById(prodId, (product) => {
-        if (!product) {
-            res.redirect('/');
-        }
-        res.render('admin/edit-product', {
-            pageTitle: 'Edit Product',
-            path: '/admin/edit-product',
-            editing: edit,
-            product: product,
-        });
-    });
-};
-const postEditProduct = (req, res, _next) => {
-    const UprodId = req.body.productId;
-    const Utitle = req.body.title;
-    const UimageUrl = req.body.imageUrl;
-    const Uprice = req.body.price;
-    const Udescription = req.body.description;
-    const Uproduct = new product_1.default.Products(Utitle, UimageUrl, Uprice, Udescription, UprodId);
-    Uproduct.save();
-    res.redirect('/admin/products');
-};
-const postDeleteProduct = (req, res, _next) => {
-    const prodId = req.body.productId;
-    product_1.default.Products.deletePro(prodId);
-    res.redirect('/admin/products');
+    })
+        .catch((err) => console.log(err));
 };
 exports.default = module.exports = {
     getAddProduct,
     getProducts,
     postAddProduct,
-    getEditProduct,
-    postEditProduct,
-    postDeleteProduct,
 };
 //# sourceMappingURL=admin.js.map
