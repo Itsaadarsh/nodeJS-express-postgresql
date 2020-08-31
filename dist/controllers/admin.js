@@ -9,20 +9,16 @@ const getAddProduct = (_req, res, _next) => {
     });
 };
 const postAddProduct = (req, res, _next) => {
-    const title = req.body.title;
-    const imageUrl = req.body.imageUrl;
-    const price = req.body.price;
-    const description = req.body.description;
     const product = new product_1.Product();
-    product.title = title;
-    product.imageUrl = imageUrl;
-    product.price = price;
-    product.description = description;
+    product.title = req.body.title;
+    product.imageUrl = req.body.imageUrl;
+    product.price = req.body.price;
+    product.description = req.body.description;
     product_1.Product.save(product);
     res.redirect('/');
 };
 const getProducts = (_req, res, _next) => {
-    product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description'] })
+    product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
         .then((products) => {
         res.render('admin/products', {
             prods: products,
@@ -32,9 +28,38 @@ const getProducts = (_req, res, _next) => {
     })
         .catch((err) => console.log(err));
 };
+const getEditProduct = (req, res, _next) => {
+    const prodId = +req.params.productId;
+    const edit = req.query.edit;
+    if (edit === 'false')
+        res.redirect('/');
+    product_1.Product.findOne({ id: +prodId })
+        .then((prod) => {
+        if (!prod)
+            res.redirect('/');
+        res.render('admin/edit-product', {
+            pageTitle: 'Edit Product',
+            path: '/admin/edit-product',
+            editing: edit,
+            product: prod,
+        });
+    })
+        .catch((err) => console.log(err));
+};
+const postEditProduct = (req, res, _next) => {
+    product_1.Product.update({ id: +req.body.productId }, {
+        title: req.body.title,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        description: req.body.description,
+    });
+    res.redirect('/admin/products');
+};
 exports.default = module.exports = {
     getAddProduct,
     getProducts,
     postAddProduct,
+    getEditProduct,
+    postEditProduct,
 };
 //# sourceMappingURL=admin.js.map
