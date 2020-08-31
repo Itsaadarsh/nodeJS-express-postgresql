@@ -9,19 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Cart = void 0;
+exports.CartItem = void 0;
 const typeorm_1 = require("typeorm");
 const product_1 = require("../models/product");
-const cart_item_1 = require("../models/cart-item");
-console.log(product_1.Product, cart_item_1.CartItem);
-let Cart = class Cart extends typeorm_1.BaseEntity {
+const cart_1 = require("../models/cart");
+console.log(product_1.Product, cart_1.Cart);
+let CartItem = class CartItem extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], Cart.prototype, "id", void 0);
-Cart = __decorate([
+], CartItem.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column('numeric', { nullable: false }),
+    __metadata("design:type", Number)
+], CartItem.prototype, "qty", void 0);
+CartItem = __decorate([
     typeorm_1.Entity()
-], Cart);
-exports.Cart = Cart;
-//# sourceMappingURL=cart.js.map
+], CartItem);
+exports.CartItem = CartItem;
+//# sourceMappingURL=cart-item.js.map

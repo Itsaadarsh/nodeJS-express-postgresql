@@ -1,4 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Cart } from '../models/cart';
+import { CartItem } from '../models/cart-item';
+console.log(Cart, CartItem);
 
 export interface Item {
   id: number;

@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-// import Product from './models/product';
 import express from 'express';
 import bodyParser from 'body-parser';
 import homeRouter from './routes/shop';
