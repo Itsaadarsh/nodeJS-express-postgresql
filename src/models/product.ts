@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 export interface Item {
+  id: number;
   title: string;
   price: number;
   imageUrl: string;

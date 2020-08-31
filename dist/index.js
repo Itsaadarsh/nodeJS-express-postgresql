@@ -7,6 +7,7 @@ require("reflect-metadata");
 const typeorm_1 = require("typeorm");
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const shop_1 = __importDefault(require("./routes/shop"));
 const admin_1 = __importDefault(require("./routes/admin"));
 const error_1 = __importDefault(require("./controllers/error"));
 typeorm_1.createConnection()
@@ -16,6 +17,7 @@ typeorm_1.createConnection()
     app.use(body_parser_1.default.urlencoded({ extended: false }));
     app.use(express_1.default.static('dist'));
     app.use('/admin', admin_1.default.router);
+    app.use(shop_1.default);
     app.use(error_1.default.error404);
     app.listen(8080), console.log('Listening at 8080');
 })

@@ -1,12 +1,12 @@
-// import express from 'express';
-// const router = express.Router();
-// import shopController from '../controllers/shop';
+import express from 'express';
+const router = express.Router();
+import shopController from '../controllers/shop';
 
-// router.get('/', shopController.getHome);
+router.get('/', shopController.getHome);
 
-// router.get('/products', shopController.getProducts);
+router.get('/products', shopController.getProducts);
 
-// router.get('/products/:productId', shopController.getProduct);
+router.get('/products/:productId', shopController.getProduct);
 
 // router.get('/cart', shopController.getCart);
 
@@ -18,4 +18,4 @@
 
 // router.get('/checkout', shopController.getCheckout);
 
-// export default module.exports = router;
+export default module.exports = router;
