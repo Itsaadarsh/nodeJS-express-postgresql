@@ -47,13 +47,23 @@ const getEditProduct = (req, res, _next) => {
         .catch((err) => console.log(err));
 };
 const postEditProduct = (req, res, _next) => {
-    product_1.Product.update({ id: +req.body.productId }, {
-        title: req.body.title,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        description: req.body.description,
-    });
-    res.redirect('/admin/products');
+    const prodId = +req.body.productId;
+    if (typeof prodId === 'number') {
+        product_1.Product.update({ id: prodId }, {
+            title: req.body.title,
+            imageUrl: req.body.imageUrl,
+            price: req.body.price,
+            description: req.body.description,
+        });
+        res.redirect('/admin/products');
+    }
+};
+const postDeleteProduct = (req, res, _next) => {
+    const prodId = +req.body.productId;
+    if (typeof prodId === 'number') {
+        product_1.Product.delete({ id: prodId });
+        res.redirect('/admin/products');
+    }
 };
 exports.default = module.exports = {
     getAddProduct,
@@ -61,5 +71,6 @@ exports.default = module.exports = {
     postAddProduct,
     getEditProduct,
     postEditProduct,
+    postDeleteProduct,
 };
 //# sourceMappingURL=admin.js.map

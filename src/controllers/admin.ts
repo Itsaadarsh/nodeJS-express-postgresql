@@ -1,5 +1,4 @@
 import { Product } from '../models/product';
-// import { getRepository } from 'typeorm';
 import express from 'express';
 
 const getAddProduct = (
@@ -66,27 +65,32 @@ const postEditProduct = (
   res: express.Response,
   _next: express.NextFunction
 ) => {
-  Product.update(
-    { id: +req.body.productId },
-    {
-      title: req.body.title,
-      imageUrl: req.body.imageUrl,
-      price: req.body.price,
-      description: req.body.description,
-    }
-  );
-  res.redirect('/admin/products');
+  const prodId: number = +req.body.productId;
+  if (typeof prodId === 'number') {
+    Product.update(
+      { id: prodId },
+      {
+        title: req.body.title,
+        imageUrl: req.body.imageUrl,
+        price: req.body.price,
+        description: req.body.description,
+      }
+    );
+    res.redirect('/admin/products');
+  }
 };
 
-// const postDeleteProduct = (
-//   req: express.Request,
-//   res: express.Response,
-//   _next: express.NextFunction
-// ) => {
-//   const prodId = req.body.productId;
-//   Product.Products.deletePro(prodId);
-//   res.redirect('/admin/products');
-// };
+const postDeleteProduct = (
+  req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
+  const prodId: number = +req.body.productId;
+  if (typeof prodId === 'number') {
+    Product.delete({ id: prodId });
+    res.redirect('/admin/products');
+  }
+};
 
 export default module.exports = {
   getAddProduct,
@@ -94,5 +98,5 @@ export default module.exports = {
   postAddProduct,
   getEditProduct,
   postEditProduct,
-  // postDeleteProduct,
+  postDeleteProduct,
 };
