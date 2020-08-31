@@ -1,8 +1,6 @@
-import Product, { Item } from '../models/product';
-import { getRepository } from 'typeorm';
+import { Product } from '../models/product';
+// import { getRepository } from 'typeorm';
 import express from 'express';
-// const manager = getManager();
-const userRepo = getRepository(Product.Product);
 
 const getAddProduct = (
   _req: express.Request,
@@ -25,18 +23,17 @@ const postAddProduct = (
   const imageUrl: string = req.body.imageUrl;
   const price: number = req.body.price;
   const description: string = req.body.description;
-  const product: Item = new Product.Product();
+  const product = new Product();
   product.title = title;
   product.imageUrl = imageUrl;
   product.price = price;
   product.description = description;
-  userRepo.save(product);
+  Product.save(product);
   res.redirect('/');
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  userRepo
-    .find({ select: ['title', 'imageUrl', 'price', 'description'] })
+  Product.find({ select: ['title', 'imageUrl', 'price', 'description'] })
     .then((products) => {
       res.render('admin/products', {
         prods: products,

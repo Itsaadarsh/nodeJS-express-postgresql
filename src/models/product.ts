@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 export interface Item {
   title: string;
@@ -8,7 +8,7 @@ export interface Item {
 }
 
 @Entity()
-class Product implements Item {
+export class Product extends BaseEntity implements Item {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,7 +24,3 @@ class Product implements Item {
   @Column('varchar', { nullable: false, length: 255 })
   description: string;
 }
-
-export default module.exports = {
-  Product,
-};

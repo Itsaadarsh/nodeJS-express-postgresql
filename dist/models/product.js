@@ -9,8 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Product = void 0;
 const typeorm_1 = require("typeorm");
-let Product = class Product {
+let Product = class Product extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
@@ -35,7 +36,5 @@ __decorate([
 Product = __decorate([
     typeorm_1.Entity()
 ], Product);
-exports.default = module.exports = {
-    Product,
-};
+exports.Product = Product;
 //# sourceMappingURL=product.js.map

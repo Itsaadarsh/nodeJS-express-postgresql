@@ -8,8 +8,7 @@ import adminData from './routes/admin';
 import errorRoute from './controllers/error';
 
 createConnection()
-  .then((connection) => {
-    console.log(connection);
+  .then((_connection) => {
     const app = express();
 
     app.set('view engine', 'ejs');

@@ -10,8 +10,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const admin_1 = __importDefault(require("./routes/admin"));
 const error_1 = __importDefault(require("./controllers/error"));
 typeorm_1.createConnection()
-    .then((connection) => {
-    console.log(connection);
+    .then((_connection) => {
     const app = express_1.default();
     app.set('view engine', 'ejs');
     app.use(body_parser_1.default.urlencoded({ extended: false }));
