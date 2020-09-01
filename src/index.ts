@@ -21,9 +21,12 @@ createConnection()
 
     app.use(
       '/user/:username/:email',
-      (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+      (req: any, res: express.Response, _next: express.NextFunction) => {
         const uname = req.params.username;
         const uemail = req.params.email;
+        req.user = uname;
+        console.log(req.user);
+
         res.send(`
         <h1>User created ${uname} ${uemail}</h1>
         <form action='/'>
