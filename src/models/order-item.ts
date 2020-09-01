@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column } from 'typeorm';
 
 @Entity()
-export class CartItem extends BaseEntity {
+export class OrderItem extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

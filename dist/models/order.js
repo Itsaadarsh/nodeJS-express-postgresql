@@ -9,20 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CartItem = void 0;
+exports.Order = void 0;
 const typeorm_1 = require("typeorm");
-let CartItem = class CartItem extends typeorm_1.BaseEntity {
+let Order = class Order extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], CartItem.prototype, "id", void 0);
-__decorate([
-    typeorm_1.Column('smallint', { nullable: false }),
-    __metadata("design:type", Number)
-], CartItem.prototype, "quantity", void 0);
-CartItem = __decorate([
+], Order.prototype, "id", void 0);
+Order = __decorate([
     typeorm_1.Entity()
-], CartItem);
-exports.CartItem = CartItem;
-//# sourceMappingURL=cart-item.js.map
+], Order);
+exports.Order = Order;
+//# sourceMappingURL=order.js.map
