@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from 'typeorm';
+import { Product } from './product';
 
 @Entity()
 export class User extends BaseEntity {
@@ -8,6 +9,9 @@ export class User extends BaseEntity {
   @Column('varchar', { nullable: false, length: 100 })
   username: string;
 
-  @Column('varchar', { nullable: false, length: 100, unique: true })
+  @Column('varchar', { nullable: false, length: 100 })
   email: string;
+
+  @OneToMany(() => Product, (prod) => prod.userid)
+  prodId: Product[];
 }

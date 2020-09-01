@@ -5,10 +5,35 @@ import bodyParser from 'body-parser';
 import homeRouter from './routes/shop';
 import adminData from './routes/admin';
 import errorRoute from './controllers/error';
+import { User } from './models/user';
+
+// export const creatingUser = () => {
+//   const user = new User();
+//   user.username = 'Aadarsh';
+//   user.email = 'aadarsh@aadarsh.com';
+//   user.save();
+//   return user;
+// };
 
 createConnection()
   .then((_connection) => {
     const app = express();
+
+    app.use(
+      '/user/:username/:email',
+      (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+        const uname = req.params.username;
+        const uemail = req.params.email;
+        res.send(`
+        <h1>User created ${uname} ${uemail}</h1>
+        <form action='/'>
+        <input type="hidden" value="${uname}" name="username">
+        <input type="hidden" value="${uemail}" name="useremail">
+        <button type='submit'>lets go</button>
+        </form>
+        `);
+      }
+    );
 
     app.set('view engine', 'ejs');
     app.use(bodyParser.urlencoded({ extended: false }));

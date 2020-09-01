@@ -1,11 +1,16 @@
 import { Product } from '../models/product';
 import express from 'express';
+import { getHome } from '../controllers/shop';
+// import { User } from '../models/user';
+// import { creatingUser } from '../index';
 
 const getAddProduct = (
-  _req: express.Request,
+  req: express.Request,
   res: express.Response,
   _next: express.NextFunction
 ) => {
+  console.log(getHome);
+
   res.render('admin/edit-product', {
     pageTitle: 'ADD PRODUCTS',
     path: '/admin/add-product',
@@ -23,6 +28,7 @@ const postAddProduct = (
   product.imageUrl = req.body.imageUrl;
   product.price = req.body.price;
   product.description = req.body.description;
+  product.userid = User;
   Product.save(product);
   res.redirect('/');
 };

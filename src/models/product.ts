@@ -1,18 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-import { Cart } from '../models/cart';
-import { CartItem } from '../models/cart-item';
-console.log(Cart, CartItem);
-
-export interface Item {
-  id: number;
-  title: string;
-  price: number;
-  imageUrl: string;
-  description: string;
-}
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import { User } from './user';
 
 @Entity()
-export class Product extends BaseEntity implements Item {
+export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -27,4 +17,7 @@ export class Product extends BaseEntity implements Item {
 
   @Column('varchar', { nullable: false, length: 255 })
   description: string;
+
+  @ManyToOne(() => User, (user) => user.prodId, { cascade: true })
+  userid: User;
 }

@@ -1,8 +1,19 @@
 // import { Cart } from '../models/cart';
 import { Product } from '../models/product';
 import express from 'express';
+import { User } from '../models/user';
 
-const getHome = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+export const getHome = (
+  req: express.Request,
+  res: express.Response,
+  _next: express.NextFunction
+) => {
+  const user = new User();
+  const uname: string = req.query.username;
+  const uemail: string = req.query.useremail;
+  user.username = uname;
+  user.email = uemail;
+  user.save();
   Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
     .then((products) => {
       res.render('shop/index', {
@@ -14,6 +25,7 @@ const getHome = (_req: express.Request, res: express.Response, _next: express.Ne
     .catch((err) => {
       console.log(err);
     });
+  return user;
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {

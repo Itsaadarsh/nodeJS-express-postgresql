@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = require("../models/product");
-const getAddProduct = (_req, res, _next) => {
+const shop_1 = require("../controllers/shop");
+const getAddProduct = (req, res, _next) => {
+    console.log(shop_1.getHome);
     res.render('admin/edit-product', {
         pageTitle: 'ADD PRODUCTS',
         path: '/admin/add-product',
@@ -14,6 +16,7 @@ const postAddProduct = (req, res, _next) => {
     product.imageUrl = req.body.imageUrl;
     product.price = req.body.price;
     product.description = req.body.description;
+    product.userid = User;
     product_1.Product.save(product);
     res.redirect('/');
 };

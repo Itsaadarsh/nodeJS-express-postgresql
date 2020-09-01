@@ -13,6 +13,18 @@ const error_1 = __importDefault(require("./controllers/error"));
 typeorm_1.createConnection()
     .then((_connection) => {
     const app = express_1.default();
+    app.use('/user/:username/:email', (req, res, _next) => {
+        const uname = req.params.username;
+        const uemail = req.params.email;
+        res.send(`
+        <h1>User created ${uname} ${uemail}</h1>
+        <form action='/'>
+        <input type="hidden" value="${uname}" name="username">
+        <input type="hidden" value="${uemail}" name="useremail">
+        <button type='submit'>lets go</button>
+        </form>
+        `);
+    });
     app.set('view engine', 'ejs');
     app.use(body_parser_1.default.urlencoded({ extended: false }));
     app.use(express_1.default.static('dist'));

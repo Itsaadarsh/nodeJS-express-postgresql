@@ -11,9 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cart = void 0;
 const typeorm_1 = require("typeorm");
-const product_1 = require("../models/product");
-const cart_item_1 = require("../models/cart-item");
-console.log(product_1.Product, cart_item_1.CartItem);
 let Cart = class Cart extends typeorm_1.BaseEntity {
 };
 __decorate([
