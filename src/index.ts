@@ -7,13 +7,13 @@ import adminData from './routes/admin';
 import errorRoute from './controllers/error';
 import { User } from './models/user';
 
-// export const creatingUser = () => {
-//   const user = new User();
-//   user.username = 'Aadarsh';
-//   user.email = 'aadarsh@aadarsh.com';
-//   user.save();
-//   return user;
-// };
+export const creatingUser = () => {
+  const user = new User();
+  user.username = 'Aadarsh';
+  user.email = 'aadarsh@aadarsh.com';
+  user.save();
+  return user;
+};
 
 createConnection()
   .then((_connection) => {
