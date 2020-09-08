@@ -5,15 +5,6 @@ import bodyParser from 'body-parser';
 import homeRouter from './routes/shop';
 import adminData from './routes/admin';
 import errorRoute from './controllers/error';
-import { User } from './models/user';
-
-export const creatingUser = () => {
-  const user = new User();
-  user.username = 'Aadarsh';
-  user.email = 'aadarsh@aadarsh.com';
-  user.save();
-  return user;
-};
 
 createConnection()
   .then((_connection) => {
@@ -46,7 +37,7 @@ createConnection()
     app.use(homeRouter);
     app.use(errorRoute.error404);
 
-    app.listen(8080), console.log('Listening at 8080');
+    app.listen(8081), console.log('Listening at 8080');
   })
   .catch((error) => console.log(error));
 

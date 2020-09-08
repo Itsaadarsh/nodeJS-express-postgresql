@@ -18,6 +18,6 @@ export class Product extends BaseEntity {
   @Column('varchar', { nullable: false, length: 255 })
   description: string;
 
-  @ManyToOne(() => User, (user) => user.prodId, { cascade: true })
-  userid: User;
+  // @ManyToOne(() => User, (user) => user.prodId, { cascade: true })
+  // userid: User;
 }

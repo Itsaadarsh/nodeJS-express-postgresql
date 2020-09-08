@@ -16,7 +16,6 @@ const postAddProduct = (req, res, _next) => {
     product.imageUrl = req.body.imageUrl;
     product.price = req.body.price;
     product.description = req.body.description;
-    product.userid = User;
     product_1.Product.save(product);
     res.redirect('/');
 };

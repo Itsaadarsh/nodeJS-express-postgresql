@@ -1,7 +1,7 @@
 import { Product } from '../models/product';
 import express from 'express';
 import { getHome } from '../controllers/shop';
-// import { User } from '../models/user';
+import { User } from '../models/user';
 // import { creatingUser } from '../index';
 
 const getAddProduct = (
@@ -28,7 +28,7 @@ const postAddProduct = (
   product.imageUrl = req.body.imageUrl;
   product.price = req.body.price;
   product.description = req.body.description;
-  product.userid = User;
+  // product.userid = new User();
   Product.save(product);
   res.redirect('/');
 };
