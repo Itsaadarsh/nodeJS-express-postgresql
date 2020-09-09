@@ -2,9 +2,6 @@ import express from 'express';
 import { User } from '../models/user';
 import { Cart } from '../models/cart';
 const router = express.Router();
-import userRoute from '../routes/user';
-
-const users: User[] = [];
 
 router.get('/:username/:email', (req: any, res: express.Response, _next: express.NextFunction) => {
   const uname = req.params.username;
@@ -21,17 +18,15 @@ router.get('/:username/:email', (req: any, res: express.Response, _next: express
 
 router.post('/:username/:email', (req: any, res: express.Response, _next: express.NextFunction) => {
   const user = new User();
-  const cart = new Cart();
-  const uname: string = req.params.username;
-  const uemail: string = req.params.email;
-  user.username = uname;
-  user.email = uemail;
-  users.push(user);
+  user.username = req.params.username;
+  user.email = req.params.email;
   user.save();
-  cart.userid = userRoute.users[userRoute.users.length - 1];
+
+  const cart = new Cart();
+  cart.userid = user;
   cart.save();
-  req.userid = user.id;
+
   res.redirect('/');
 });
 
-export default module.exports = { router, users };
+export default module.exports = { router };

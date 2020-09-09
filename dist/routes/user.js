@@ -7,8 +7,6 @@ const express_1 = __importDefault(require("express"));
 const user_1 = require("../models/user");
 const cart_1 = require("../models/cart");
 const router = express_1.default.Router();
-const user_2 = __importDefault(require("../routes/user"));
-const users = [];
 router.get('/:username/:email', (req, res, _next) => {
     const uname = req.params.username;
     const uemail = req.params.email;
@@ -23,17 +21,13 @@ router.get('/:username/:email', (req, res, _next) => {
 });
 router.post('/:username/:email', (req, res, _next) => {
     const user = new user_1.User();
-    const cart = new cart_1.Cart();
-    const uname = req.params.username;
-    const uemail = req.params.email;
-    user.username = uname;
-    user.email = uemail;
-    users.push(user);
+    user.username = req.params.username;
+    user.email = req.params.email;
     user.save();
-    cart.userid = user_2.default.users[user_2.default.users.length - 1];
+    const cart = new cart_1.Cart();
+    cart.userid = user;
     cart.save();
-    req.userid = user.id;
     res.redirect('/');
 });
-exports.default = module.exports = { router, users };
+exports.default = module.exports = { router };
 //# sourceMappingURL=user.js.map

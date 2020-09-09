@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = require("../models/product");
-const user_1 = __importDefault(require("../routes/user"));
+const user_1 = require("../models/user");
 const getAddProduct = (_req, res, _next) => {
     res.render('admin/edit-product', {
         pageTitle: 'ADD PRODUCTS',
@@ -13,17 +10,21 @@ const getAddProduct = (_req, res, _next) => {
     });
 };
 const postAddProduct = (req, res, _next) => {
-    const product = new product_1.Product();
-    product.title = req.body.title;
-    product.imageUrl = req.body.imageUrl;
-    product.price = req.body.price;
-    product.description = req.body.description;
-    product.userid = user_1.default.users[user_1.default.users.length - 1];
-    product_1.Product.save(product);
-    res.redirect('/');
+    user_1.User.find({ select: ['id'] })
+        .then(userID => {
+        const product = new product_1.Product();
+        product.title = req.body.title;
+        product.imageUrl = req.body.imageUrl;
+        product.price = req.body.price;
+        product.description = req.body.description;
+        product.userid = userID[userID.length - 1];
+        product_1.Product.save(product);
+        res.redirect('/');
+    })
+        .catch(err => console.log(err));
 };
-const getProducts = (_req, res, _next) => {
-    product_1.Product.find({ where: { userid: user_1.default.users[user_1.default.users.length - 1].id } })
+const getProducts = (req, res, _next) => {
+    product_1.Product.find({ where: { userid: req.userId } })
         .then(products => {
         res.render('admin/products', {
             prods: products,

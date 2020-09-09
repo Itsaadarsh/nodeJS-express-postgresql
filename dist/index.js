@@ -11,14 +11,23 @@ const shop_1 = __importDefault(require("./routes/shop"));
 const admin_1 = __importDefault(require("./routes/admin"));
 const error_1 = __importDefault(require("./controllers/error"));
 const user_1 = __importDefault(require("./routes/user"));
+const user_2 = require("./models/user");
 typeorm_1.createConnection()
     .then(_connection => {
     const app = express_1.default();
     app.set('view engine', 'ejs');
     app.use(body_parser_1.default.urlencoded({ extended: false }));
     app.use(express_1.default.static('dist'));
-    app.use('/admin', admin_1.default.router);
     app.use('/user', user_1.default.router);
+    app.use((req, _res, next) => {
+        user_2.User.find({ order: { id: 'DESC' }, take: 1 })
+            .then(userId => {
+            req.userId = userId[0].id;
+            next();
+        })
+            .catch(err => console.log(err));
+    });
+    app.use('/admin', admin_1.default.router);
     app.use(shop_1.default);
     app.use(error_1.default.error404);
     app.listen(8080), console.log('Listening at 8080');

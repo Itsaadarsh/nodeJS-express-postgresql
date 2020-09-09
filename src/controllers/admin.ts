@@ -1,6 +1,6 @@
 import { Product } from '../models/product';
 import express from 'express';
-import userRoute from '../routes/user';
+import { User } from '../models/user';
 
 const getAddProduct = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.render('admin/edit-product', {
@@ -10,19 +10,23 @@ const getAddProduct = (_req: express.Request, res: express.Response, _next: expr
   });
 };
 
-const postAddProduct = (req: any, res: express.Response, _next: express.NextFunction) => {
-  const product = new Product();
-  product.title = req.body.title;
-  product.imageUrl = req.body.imageUrl;
-  product.price = req.body.price;
-  product.description = req.body.description;
-  product.userid = userRoute.users[userRoute.users.length - 1];
-  Product.save(product);
-  res.redirect('/');
+const postAddProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  User.find({ select: ['id'] })
+    .then(userID => {
+      const product = new Product();
+      product.title = req.body.title;
+      product.imageUrl = req.body.imageUrl;
+      product.price = req.body.price;
+      product.description = req.body.description;
+      product.userid = userID[userID.length - 1];
+      Product.save(product);
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
 };
 
-const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  Product.find({ where: { userid: userRoute.users[userRoute.users.length - 1].id } })
+const getProducts = (req: any, res: express.Response, _next: express.NextFunction) => {
+  Product.find({ where: { userid: req.userId } })
     .then(products => {
       res.render('admin/products', {
         prods: products,
