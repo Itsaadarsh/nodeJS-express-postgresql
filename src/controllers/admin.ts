@@ -2,11 +2,7 @@ import { Product } from '../models/product';
 import express from 'express';
 import userRoute from '../routes/user';
 
-const getAddProduct = (
-  _req: express.Request,
-  res: express.Response,
-  _next: express.NextFunction
-) => {
+const getAddProduct = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   res.render('admin/edit-product', {
     pageTitle: 'ADD PRODUCTS',
     path: '/admin/add-product',
@@ -37,11 +33,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
     .catch(err => console.log(err));
 };
 
-const getEditProduct = (
-  req: express.Request,
-  res: express.Response,
-  _next: express.NextFunction
-) => {
+const getEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodId = +req.params.productId;
   const edit = req.query.edit;
   if (edit === 'false') res.redirect('/');
@@ -58,11 +50,7 @@ const getEditProduct = (
     .catch(err => console.log(err));
 };
 
-const postEditProduct = (
-  req: express.Request,
-  res: express.Response,
-  _next: express.NextFunction
-) => {
+const postEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodId: number = +req.body.productId;
   if (typeof prodId === 'number') {
     Product.update(
@@ -78,11 +66,7 @@ const postEditProduct = (
   }
 };
 
-const postDeleteProduct = (
-  req: express.Request,
-  res: express.Response,
-  _next: express.NextFunction
-) => {
+const postDeleteProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodId: number = +req.body.productId;
   if (typeof prodId === 'number') {
     Product.delete({ id: prodId });

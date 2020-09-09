@@ -11,12 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cart = void 0;
 const typeorm_1 = require("typeorm");
+const user_1 = require("./user");
 let Cart = class Cart extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Cart.prototype, "id", void 0);
+__decorate([
+    typeorm_1.OneToOne(() => user_1.User, user => user.cartid),
+    typeorm_1.JoinColumn({ name: 'userid' }),
+    __metadata("design:type", user_1.User)
+], Cart.prototype, "userid", void 0);
 Cart = __decorate([
     typeorm_1.Entity()
 ], Cart);

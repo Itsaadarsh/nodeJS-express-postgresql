@@ -1,6 +1,8 @@
 import express from 'express';
 import { User } from '../models/user';
+import { Cart } from '../models/cart';
 const router = express.Router();
+import userRoute from '../routes/user';
 
 const users: User[] = [];
 
@@ -19,13 +21,15 @@ router.get('/:username/:email', (req: any, res: express.Response, _next: express
 
 router.post('/:username/:email', (req: any, res: express.Response, _next: express.NextFunction) => {
   const user = new User();
+  const cart = new Cart();
   const uname: string = req.params.username;
   const uemail: string = req.params.email;
   user.username = uname;
   user.email = uemail;
-  req.newuser = user;
   users.push(user);
   user.save();
+  cart.userid = userRoute.users[userRoute.users.length - 1];
+  cart.save();
   req.userid = user.id;
   res.redirect('/');
 });

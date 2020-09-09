@@ -5,7 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_1 = require("../models/user");
+const cart_1 = require("../models/cart");
 const router = express_1.default.Router();
+const user_2 = __importDefault(require("../routes/user"));
 const users = [];
 router.get('/:username/:email', (req, res, _next) => {
     const uname = req.params.username;
@@ -21,13 +23,15 @@ router.get('/:username/:email', (req, res, _next) => {
 });
 router.post('/:username/:email', (req, res, _next) => {
     const user = new user_1.User();
+    const cart = new cart_1.Cart();
     const uname = req.params.username;
     const uemail = req.params.email;
     user.username = uname;
     user.email = uemail;
-    req.newuser = user;
     users.push(user);
     user.save();
+    cart.userid = user_2.default.users[user_2.default.users.length - 1];
+    cart.save();
     req.userid = user.id;
     res.redirect('/');
 });
