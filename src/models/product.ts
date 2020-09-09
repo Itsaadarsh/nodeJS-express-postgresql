@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user';
 
 @Entity()
@@ -18,6 +18,7 @@ export class Product extends BaseEntity {
   @Column('varchar', { nullable: false, length: 255 })
   description: string;
 
-  // @ManyToOne(() => User, (user) => user.prodId, { cascade: true })
-  // userid: User;
+  @ManyToOne(() => User, user => user.prodId)
+  @JoinColumn({ referencedColumnName: 'id', name: 'userid' })
+  userid: User;
 }

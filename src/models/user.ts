@@ -12,6 +12,6 @@ export class User extends BaseEntity {
   @Column('varchar', { nullable: false, length: 100 })
   email: string;
 
-  // @OneToMany(() => Product, (prod) => prod.userid)
-  // prodId: Product[];
+  @OneToMany(() => Product, prod => prod.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  prodId: Array<Product>;
 }

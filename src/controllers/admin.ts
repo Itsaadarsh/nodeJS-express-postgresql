@@ -1,16 +1,12 @@
 import { Product } from '../models/product';
 import express from 'express';
-import { getHome } from '../controllers/shop';
-import { User } from '../models/user';
-// import { creatingUser } from '../index';
+import userRoute from '../routes/user';
 
 const getAddProduct = (
-  req: express.Request,
+  _req: express.Request,
   res: express.Response,
   _next: express.NextFunction
 ) => {
-  console.log(getHome);
-
   res.render('admin/edit-product', {
     pageTitle: 'ADD PRODUCTS',
     path: '/admin/add-product',
@@ -18,31 +14,27 @@ const getAddProduct = (
   });
 };
 
-const postAddProduct = (
-  req: express.Request,
-  res: express.Response,
-  _next: express.NextFunction
-) => {
+const postAddProduct = (req: any, res: express.Response, _next: express.NextFunction) => {
   const product = new Product();
   product.title = req.body.title;
   product.imageUrl = req.body.imageUrl;
   product.price = req.body.price;
   product.description = req.body.description;
-  // product.userid = new User();
+  product.userid = userRoute.users[userRoute.users.length - 1];
   Product.save(product);
   res.redirect('/');
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
-    .then((products) => {
+  Product.find({ where: { userid: userRoute.users[userRoute.users.length - 1].id } })
+    .then(products => {
       res.render('admin/products', {
         prods: products,
         pageTitle: 'ADMIN PRODUCTS',
         path: '/admin/products',
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 const getEditProduct = (
@@ -54,7 +46,7 @@ const getEditProduct = (
   const edit = req.query.edit;
   if (edit === 'false') res.redirect('/');
   Product.findOne({ id: +prodId })
-    .then((prod) => {
+    .then(prod => {
       if (!prod) res.redirect('/');
       res.render('admin/edit-product', {
         pageTitle: 'Edit Product',
@@ -63,7 +55,7 @@ const getEditProduct = (
         product: prod,
       });
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 };
 
 const postEditProduct = (

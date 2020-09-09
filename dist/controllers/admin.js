@@ -1,9 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const product_1 = require("../models/product");
-const shop_1 = require("../controllers/shop");
-const getAddProduct = (req, res, _next) => {
-    console.log(shop_1.getHome);
+const user_1 = __importDefault(require("../routes/user"));
+const getAddProduct = (_req, res, _next) => {
     res.render('admin/edit-product', {
         pageTitle: 'ADD PRODUCTS',
         path: '/admin/add-product',
@@ -16,19 +18,20 @@ const postAddProduct = (req, res, _next) => {
     product.imageUrl = req.body.imageUrl;
     product.price = req.body.price;
     product.description = req.body.description;
+    product.userid = user_1.default.users[user_1.default.users.length - 1];
     product_1.Product.save(product);
     res.redirect('/');
 };
 const getProducts = (_req, res, _next) => {
-    product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
-        .then((products) => {
+    product_1.Product.find({ where: { userid: user_1.default.users[user_1.default.users.length - 1].id } })
+        .then(products => {
         res.render('admin/products', {
             prods: products,
             pageTitle: 'ADMIN PRODUCTS',
             path: '/admin/products',
         });
     })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
 };
 const getEditProduct = (req, res, _next) => {
     const prodId = +req.params.productId;
@@ -36,7 +39,7 @@ const getEditProduct = (req, res, _next) => {
     if (edit === 'false')
         res.redirect('/');
     product_1.Product.findOne({ id: +prodId })
-        .then((prod) => {
+        .then(prod => {
         if (!prod)
             res.redirect('/');
         res.render('admin/edit-product', {
@@ -46,7 +49,7 @@ const getEditProduct = (req, res, _next) => {
             product: prod,
         });
     })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
 };
 const postEditProduct = (req, res, _next) => {
     const prodId = +req.body.productId;
