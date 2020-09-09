@@ -33,7 +33,7 @@ typeorm_1.createConnection()
     app.use('/admin', admin_1.default.router);
     app.use(shop_1.default);
     app.use(error_1.default.error404);
-    app.listen(8081), console.log('Listening at 8080');
+    app.listen(8080), console.log('Listening at 8080');
 })
     .catch((error) => console.log(error));
 //# sourceMappingURL=index.js.map
