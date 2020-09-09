@@ -48,7 +48,7 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
 //     Product.Products.fetchAll((prods: Item[]) => {
 //       const cartPro = [];
 //       for (const pro of prods) {
-//         const proData = cart.products.find((p) => p.id === pro.id);
+//         const proData = cart.products.find(p => p.id === pro.id);
 //         if (proData) {
 //           cartPro.push({ productData: pro, qty: proData.qty });
 //         }
@@ -62,13 +62,9 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
 //   });
 // };
 
-// const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-//   const prodId: string = req.body.productId;
-//   Product.Products.findById(prodId, (prods: Item) => {
-//     Cart.Cart.addProducts(prodId, prods.price);
-//   });
-//   res.redirect('/cart');
-// };
+const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  res.redirect('/cart');
+};
 
 // const postDeleteCart = (
 //   req: express.Request,
@@ -99,10 +95,10 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
 export default module.exports = {
   getHome,
   getProducts,
-  //   getCart,
+  // getCart,
   //   getOrders,
   //   getCheckout,
   getProduct,
-  //   postCart,
+  postCart,
   //   postDeleteCart,
 };

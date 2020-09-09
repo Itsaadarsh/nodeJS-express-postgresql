@@ -40,9 +40,13 @@ const getProduct = (req, res, _next) => {
     })
         .catch(err => console.log(err));
 };
+const postCart = (req, res, _next) => {
+    res.redirect('/cart');
+};
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,
     getProduct,
+    postCart,
 };
 //# sourceMappingURL=shop.js.map
