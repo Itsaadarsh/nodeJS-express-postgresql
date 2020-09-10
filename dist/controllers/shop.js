@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getHome = void 0;
 const product_1 = require("../models/product");
+const cart_item_1 = require("../models/cart-item");
 exports.getHome = (_req, res, _next) => {
     product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
         .then(products => {
@@ -41,6 +42,9 @@ const getProduct = (req, res, _next) => {
         .catch(err => console.log(err));
 };
 const postCart = (req, res, _next) => {
+    const defQty = 1;
+    const cartitem = new cart_item_1.CartItem();
+    cartitem.quantity = defQty;
     res.redirect('/cart');
 };
 exports.default = module.exports = {

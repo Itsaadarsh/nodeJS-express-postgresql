@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user';
+import { CartItem } from './cart-item';
 // import { Product } from './product';
 
 @Entity()
@@ -10,4 +11,7 @@ export class Cart extends BaseEntity {
   @OneToOne(() => User, user => user.cartid)
   @JoinColumn({ name: 'userid' })
   userid: User;
+
+  @OneToMany(() => CartItem, cartitem => cartitem.cartid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  cItem: CartItem[];
 }

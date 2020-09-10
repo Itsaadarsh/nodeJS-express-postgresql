@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column } from 'typeorm';
-// import { Cart } from './cart';
-// import { Product } from './product';
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Cart } from './cart';
+import { Product } from './product';
 
 @Entity()
 export class CartItem extends BaseEntity {
@@ -10,11 +10,7 @@ export class CartItem extends BaseEntity {
   @Column('smallint', { nullable: false })
   quantity: number;
 
-  // @OneToOne(() => Cart, cart => cart.productid)
-  // @JoinColumn({ name: 'prodid' })
-  // prodid: Cart;
-
-  // @OneToOne(() => Product, prod => prod.cartid)
-  // @JoinColumn({ name: 'cartid' })
-  // cartid: Product;
+  @ManyToOne(() => Cart, cart => cart.cItem)
+  @JoinColumn({ name: 'cartid' })
+  cartid: Cart;
 }

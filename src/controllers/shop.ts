@@ -1,6 +1,7 @@
 // import { Cart } from '../models/cart';
 import { Product } from '../models/product';
 import express from 'express';
+import { CartItem } from '../models/cart-item';
 
 export const getHome = (_req: any, res: express.Response, _next: express.NextFunction) => {
   Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
@@ -63,6 +64,9 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
 // };
 
 const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const defQty = 1;
+  const cartitem = new CartItem();
+  cartitem.quantity = defQty;
   res.redirect('/cart');
 };
 
