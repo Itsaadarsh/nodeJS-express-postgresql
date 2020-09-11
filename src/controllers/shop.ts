@@ -108,12 +108,12 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
   }, 300);
 };
 
-// const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-//   res.render('shop/orders', {
-//     path: '/orders',
-//     pageTitle: 'YOUR ORDERS',
-//   });
-// };
+const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  res.render('shop/orders', {
+    path: '/orders',
+    pageTitle: 'YOUR ORDERS',
+  });
+};
 
 const postOrder = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   User.find({ select: ['id'] })
@@ -143,14 +143,14 @@ const postOrder = (req: express.Request, res: express.Response, _next: express.N
       }, 300);
     })
     .catch(console.log);
-  res.redirect('/cart');
+  res.redirect('/orders');
 };
 
 export default module.exports = {
   getHome,
   getProducts,
   getCart,
-  //   getOrders,
+  getOrders,
   postOrder,
   getProduct,
   postCart,

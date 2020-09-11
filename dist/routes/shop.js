@@ -13,5 +13,6 @@ router.get('/cart', shop_1.default.getCart);
 router.post('/cart', shop_1.default.postCart);
 router.post('/cart-delete-item', shop_1.default.postDeleteCart);
 router.post('/create-order', shop_1.default.postOrder);
+router.get('/orders', shop_1.default.getOrders);
 exports.default = module.exports = router;
 //# sourceMappingURL=shop.js.map

@@ -98,6 +98,12 @@ const postDeleteCart = (req, res, _next) => {
         res.redirect('/cart');
     }, 300);
 };
+const getOrders = (_req, res, _next) => {
+    res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'YOUR ORDERS',
+    });
+};
 const postOrder = (req, res, _next) => {
     user_1.User.find({ select: ['id'] })
         .then(userId => {
@@ -125,12 +131,13 @@ const postOrder = (req, res, _next) => {
         }, 300);
     })
         .catch(console.log);
-    res.redirect('/cart');
+    res.redirect('/orders');
 };
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,
     getCart,
+    getOrders,
     postOrder,
     getProduct,
     postCart,
