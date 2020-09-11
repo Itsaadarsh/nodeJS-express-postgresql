@@ -3,10 +3,12 @@ import { User } from '../models/user';
 import { Cart } from '../models/cart';
 const router = express.Router();
 
-router.get('/:username/:email', (req: any, res: express.Response, _next: express.NextFunction) => {
-  const uname = req.params.username;
-  const uemail = req.params.email;
-  res.send(`
+router.get(
+  '/:username/:email',
+  (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const uname = req.params.username;
+    const uemail = req.params.email;
+    res.send(`
   <h1>User created ${uname} ${uemail}</h1>
   <form  method='POST'>
   <input type="hidden" value="${uname}" name="username">
@@ -14,7 +16,8 @@ router.get('/:username/:email', (req: any, res: express.Response, _next: express
   <button type='submit'>lets go</button>
   </form>
   `);
-});
+  }
+);
 
 router.post(
   '/:username/:email',

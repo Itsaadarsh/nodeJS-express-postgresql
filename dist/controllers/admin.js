@@ -23,8 +23,8 @@ const postAddProduct = (req, res, _next) => {
     })
         .catch(err => console.log(err));
 };
-const getProducts = (req, res, _next) => {
-    product_1.Product.find({ where: { userid: req.userId } })
+const getProducts = (_req, res, _next) => {
+    product_1.Product.find({ where: { userid: 1 } })
         .then(products => {
         res.render('admin/products', {
             prods: products,

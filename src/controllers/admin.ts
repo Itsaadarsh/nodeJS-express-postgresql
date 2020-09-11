@@ -25,8 +25,8 @@ const postAddProduct = (req: express.Request, res: express.Response, _next: expr
     .catch(err => console.log(err));
 };
 
-const getProducts = (req: any, res: express.Response, _next: express.NextFunction) => {
-  Product.find({ where: { userid: req.userId } })
+const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  Product.find({ where: { userid: 1 } })
     .then(products => {
       res.render('admin/products', {
         prods: products,

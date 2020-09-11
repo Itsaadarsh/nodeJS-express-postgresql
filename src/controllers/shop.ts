@@ -3,7 +3,7 @@ import { Product } from '../models/product';
 import express from 'express';
 import { CartItem } from '../models/cart-item';
 
-export const getHome = (_req: any, res: express.Response, _next: express.NextFunction) => {
+export const getHome = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
     .then(products => {
       res.render('shop/index', {
