@@ -21,8 +21,8 @@ router.get('/:username/:email', (req, res, _next) => {
 });
 router.post('/:username/:email', (req, res, _next) => {
     const user = new user_1.User();
-    user.username = req.params.username;
-    user.email = req.params.email;
+    user.username = req.body.username;
+    user.email = req.body.useremail;
     user.save();
     const cart = new cart_1.Cart();
     cart.userid = user;

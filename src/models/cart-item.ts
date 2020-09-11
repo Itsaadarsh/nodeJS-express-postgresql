@@ -13,4 +13,8 @@ export class CartItem extends BaseEntity {
   @ManyToOne(() => Cart, cart => cart.cItem)
   @JoinColumn({ name: 'cartid' })
   cartid: Cart;
+
+  @ManyToOne(() => Product, prod => prod.cItem, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'productid' })
+  prodid: Product;
 }

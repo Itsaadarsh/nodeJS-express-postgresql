@@ -1,4 +1,4 @@
-// import { Cart } from '../models/cart';
+import { Cart } from '../models/cart';
 import { Product } from '../models/product';
 import express from 'express';
 import { CartItem } from '../models/cart-item';
@@ -64,10 +64,23 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
 // };
 
 const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  const defQty = 1;
-  const cartitem = new CartItem();
-  cartitem.quantity = defQty;
-  res.redirect('/cart');
+  const prodID = req.body.productId;
+  console.log(prodID);
+  Product.findOne({ where: { id: prodID } })
+    .then(prod => {
+      Cart.find({ select: ['id'] })
+        .then(cart => {
+          const defQty = 1;
+          const cartitem = new CartItem();
+          cartitem.quantity = defQty;
+          cartitem.cartid = cart[cart.length - 1];
+          cartitem.prodid = prod as Product;
+          cartitem.save();
+          res.redirect('/cart');
+        })
+        .catch(console.log);
+    })
+    .catch(console.log);
 };
 
 // const postDeleteCart = (

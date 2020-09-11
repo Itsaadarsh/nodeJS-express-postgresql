@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { CartItem } from './cart-item';
 import { User } from './user';
 
 @Entity()
@@ -21,4 +30,7 @@ export class Product extends BaseEntity {
   @ManyToOne(() => User, user => user.prodId)
   @JoinColumn({ referencedColumnName: 'id', name: 'userid' })
   userid: User;
+
+  @OneToMany(() => CartItem, cItem => cItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  cItem: CartItem[];
 }

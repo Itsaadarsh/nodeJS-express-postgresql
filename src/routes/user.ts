@@ -16,17 +16,20 @@ router.get('/:username/:email', (req: any, res: express.Response, _next: express
   `);
 });
 
-router.post('/:username/:email', (req: any, res: express.Response, _next: express.NextFunction) => {
-  const user = new User();
-  user.username = req.params.username;
-  user.email = req.params.email;
-  user.save();
+router.post(
+  '/:username/:email',
+  (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const user = new User();
+    user.username = req.body.username;
+    user.email = req.body.useremail;
+    user.save();
 
-  const cart = new Cart();
-  cart.userid = user;
-  cart.save();
+    const cart = new Cart();
+    cart.userid = user;
+    cart.save();
 
-  res.redirect('/');
-});
+    res.redirect('/');
+  }
+);
 
 export default module.exports = { router };
