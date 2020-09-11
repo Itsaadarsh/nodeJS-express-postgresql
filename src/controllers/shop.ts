@@ -139,6 +139,7 @@ const postOrder = (req: express.Request, res: express.Response, _next: express.N
               .catch(console.log);
           })
           .catch(console.log);
+        CartItem.delete({ cartid: userID });
       }, 300);
     })
     .catch(console.log);

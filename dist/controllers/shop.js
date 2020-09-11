@@ -121,6 +121,7 @@ const postOrder = (req, res, _next) => {
                     .catch(console.log);
             })
                 .catch(console.log);
+            cart_item_1.CartItem.delete({ cartid: userID });
         }, 300);
     })
         .catch(console.log);
