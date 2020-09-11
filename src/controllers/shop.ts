@@ -109,10 +109,7 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 };
 
 const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'YOUR ORDERS',
-  });
+  res.redirect('/');
 };
 
 const postOrder = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
@@ -134,16 +131,16 @@ const postOrder = (req: express.Request, res: express.Response, _next: express.N
                   orderItem.orderid = ord[0];
                   orderItem.prodid = oItem.prodid;
                   orderItem.save();
+                  CartItem.delete({ cartid: userID });
                 });
               })
               .catch(console.log);
           })
           .catch(console.log);
-        CartItem.delete({ cartid: userID });
-      }, 300);
+        res.redirect('/orders');
+      }, 1000);
     })
     .catch(console.log);
-  res.redirect('/orders');
 };
 
 export default module.exports = {
