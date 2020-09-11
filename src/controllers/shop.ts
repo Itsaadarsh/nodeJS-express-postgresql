@@ -115,17 +115,31 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 //   });
 // };
 
-const postOrder = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+const postOrder = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   User.find({ select: ['id'] })
     .then(userId => {
+      const userID = userId[userId.length - 1];
       const order = new Order();
-      order.userid = userId[userId.length - 1];
+      order.userid = userID;
       order.save();
-      Product.find();
-      // const orderQty: number = +req.body.qty;
-      // const orderItem = new OrderItem();
-      // orderItem.quantity = orderQty;
-      // orderItem.orderid =
+
+      setTimeout(() => {
+        Order.find({ relations: ['userid'], where: { userid: userID }, order: { id: 'DESC' }, take: 1 })
+          .then(ord => {
+            CartItem.find({ relations: ['cartid', 'prodid'], where: { cartid: userID } })
+              .then(cItem => {
+                cItem.forEach(oItem => {
+                  const orderItem = new OrderItem();
+                  orderItem.quantity = oItem.quantity;
+                  orderItem.orderid = ord[0];
+                  orderItem.prodid = oItem.prodid;
+                  orderItem.save();
+                });
+              })
+              .catch(console.log);
+          })
+          .catch(console.log);
+      }, 300);
     })
     .catch(console.log);
   res.redirect('/cart');

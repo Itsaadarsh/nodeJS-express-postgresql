@@ -6,6 +6,7 @@ const product_1 = require("../models/product");
 const cart_item_1 = require("../models/cart-item");
 const order_1 = require("../models/order");
 const user_1 = require("../models/user");
+const order_item_1 = require("../models/order-item");
 exports.getHome = (_req, res, _next) => {
     product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
         .then(products => {
@@ -97,13 +98,30 @@ const postDeleteCart = (req, res, _next) => {
         res.redirect('/cart');
     }, 300);
 };
-const postOrder = (_req, res, _next) => {
+const postOrder = (req, res, _next) => {
     user_1.User.find({ select: ['id'] })
         .then(userId => {
+        const userID = userId[userId.length - 1];
         const order = new order_1.Order();
-        order.userid = userId[userId.length - 1];
+        order.userid = userID;
         order.save();
-        product_1.Product.find();
+        setTimeout(() => {
+            order_1.Order.find({ relations: ['userid'], where: { userid: userID }, order: { id: 'DESC' }, take: 1 })
+                .then(ord => {
+                cart_item_1.CartItem.find({ relations: ['cartid', 'prodid'], where: { cartid: userID } })
+                    .then(cItem => {
+                    cItem.forEach(oItem => {
+                        const orderItem = new order_item_1.OrderItem();
+                        orderItem.quantity = oItem.quantity;
+                        orderItem.orderid = ord[0];
+                        orderItem.prodid = oItem.prodid;
+                        orderItem.save();
+                    });
+                })
+                    .catch(console.log);
+            })
+                .catch(console.log);
+        }, 300);
     })
         .catch(console.log);
     res.redirect('/cart');
