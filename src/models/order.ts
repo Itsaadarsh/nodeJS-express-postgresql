@@ -7,7 +7,7 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user.ordid)
+  @ManyToOne(() => User, user => user.ordid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ referencedColumnName: 'id', name: 'userid' })
   userid: User;
 

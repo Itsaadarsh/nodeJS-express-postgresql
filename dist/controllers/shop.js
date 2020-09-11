@@ -16,9 +16,7 @@ exports.getHome = (_req, res, _next) => {
             path: '/',
         });
     })
-        .catch(err => {
-        console.log(err);
-    });
+        .catch(console.log);
 };
 const getProducts = (_req, res, _next) => {
     product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
@@ -29,9 +27,7 @@ const getProducts = (_req, res, _next) => {
             path: '/products',
         });
     })
-        .catch(err => {
-        console.log(err);
-    });
+        .catch(console.log);
 };
 const getProduct = (req, res, _next) => {
     const prodID = +req.params.productId;
@@ -43,7 +39,7 @@ const getProduct = (req, res, _next) => {
             path: '/products',
         });
     })
-        .catch(err => console.log(err));
+        .catch(console.log);
 };
 const getCart = (_req, res, _next) => {
     const product = [];
@@ -104,7 +100,7 @@ const getOrders = (_req, res, _next) => {
         .then(ord => {
         ord.forEach(singleOrd => {
             orders.push({
-                id: singleOrd.id,
+                id: singleOrd.orderid.id,
                 products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
             });
         });
@@ -116,7 +112,7 @@ const getOrders = (_req, res, _next) => {
     })
         .catch(console.log);
 };
-const postOrder = (req, res, _next) => {
+const postOrder = (_req, res, _next) => {
     user_1.User.find({ select: ['id'] })
         .then(userId => {
         const userID = userId[userId.length - 1];

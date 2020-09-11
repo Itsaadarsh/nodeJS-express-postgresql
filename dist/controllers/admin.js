@@ -21,7 +21,7 @@ const postAddProduct = (req, res, _next) => {
         product_1.Product.save(product);
         res.redirect('/');
     })
-        .catch(err => console.log(err));
+        .catch(console.log);
 };
 const getProducts = (_req, res, _next) => {
     product_1.Product.find({ where: { userid: 1 } })
@@ -32,7 +32,7 @@ const getProducts = (_req, res, _next) => {
             path: '/admin/products',
         });
     })
-        .catch(err => console.log(err));
+        .catch(console.log);
 };
 const getEditProduct = (req, res, _next) => {
     const prodId = +req.params.productId;
@@ -50,7 +50,7 @@ const getEditProduct = (req, res, _next) => {
             product: prod,
         });
     })
-        .catch(err => console.log(err));
+        .catch(console.log);
 };
 const postEditProduct = (req, res, _next) => {
     const prodId = +req.body.productId;

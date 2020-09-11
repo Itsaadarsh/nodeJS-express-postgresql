@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user';
 import { CartItem } from './cart-item';
-// import { Product } from './product';
 
 @Entity()
 export class Cart extends BaseEntity {

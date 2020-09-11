@@ -5,6 +5,7 @@ import { CartItem } from '../models/cart-item';
 import { Order } from '../models/order';
 import { User } from '../models/user';
 import { OrderItem } from '../models/order-item';
+import { CartItems, OrderItems } from '../controllers/interface/shop';
 
 export const getHome = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
@@ -15,9 +16,7 @@ export const getHome = (_req: express.Request, res: express.Response, _next: exp
         path: '/',
       });
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(console.log);
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
@@ -29,9 +28,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
         path: '/products',
       });
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(console.log);
 };
 
 const getProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
@@ -44,14 +41,8 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
         path: '/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch(console.log);
 };
-
-interface CartItems {
-  id: number;
-  title: string;
-  cartItem: { quantity: number };
-}
 
 const getCart = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const product: CartItems[] = [];
@@ -108,18 +99,13 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
   }, 300);
 };
 
-interface OrderItems {
-  id: number;
-  products: [{ title: string; qty: number }];
-}
-
 const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const orders: OrderItems[] = [];
   OrderItem.find({ relations: ['orderid', 'prodid'] })
     .then(ord => {
       ord.forEach(singleOrd => {
         orders.push({
-          id: singleOrd.id,
+          id: singleOrd.orderid.id,
           products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
         });
       });
@@ -132,7 +118,7 @@ const getOrders = (_req: express.Request, res: express.Response, _next: express.
     .catch(console.log);
 };
 
-const postOrder = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+const postOrder = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   User.find({ select: ['id'] })
     .then(userId => {
       const userID = userId[userId.length - 1];

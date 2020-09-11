@@ -28,7 +28,7 @@ export class Product extends BaseEntity {
   @Column('varchar', { nullable: false, length: 255 })
   description: string;
 
-  @ManyToOne(() => User, user => user.prodId)
+  @ManyToOne(() => User, user => user.prodId, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ referencedColumnName: 'id', name: 'userid' })
   userid: User;
 

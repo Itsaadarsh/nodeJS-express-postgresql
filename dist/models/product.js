@@ -37,7 +37,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => user_1.User, user => user.prodId),
+    typeorm_1.ManyToOne(() => user_1.User, user => user.prodId, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
     typeorm_1.JoinColumn({ referencedColumnName: 'id', name: 'userid' }),
     __metadata("design:type", user_1.User)
 ], Product.prototype, "userid", void 0);

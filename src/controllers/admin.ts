@@ -22,7 +22,7 @@ const postAddProduct = (req: express.Request, res: express.Response, _next: expr
       Product.save(product);
       res.redirect('/');
     })
-    .catch(err => console.log(err));
+    .catch(console.log);
 };
 
 const getProducts = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
@@ -34,7 +34,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
         path: '/admin/products',
       });
     })
-    .catch(err => console.log(err));
+    .catch(console.log);
 };
 
 const getEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
@@ -51,7 +51,7 @@ const getEditProduct = (req: express.Request, res: express.Response, _next: expr
         product: prod,
       });
     })
-    .catch(err => console.log(err));
+    .catch(console.log);
 };
 
 const postEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {

@@ -14,11 +14,11 @@ export class User extends BaseEntity {
   @Column('varchar', { nullable: false, length: 100 })
   email: string;
 
-  @OneToMany(() => Product, prod => prod.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
-  prodId: Product[];
-
   @OneToOne(() => Cart, cart => cart.userid)
   cartid = Cart;
+
+  @OneToMany(() => Product, prod => prod.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  prodId: Product[];
 
   @OneToMany(() => Order, ord => ord.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   ordid: Order[];
