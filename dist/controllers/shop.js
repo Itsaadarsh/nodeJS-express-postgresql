@@ -99,7 +99,22 @@ const postDeleteCart = (req, res, _next) => {
     }, 300);
 };
 const getOrders = (_req, res, _next) => {
-    res.redirect('/');
+    const orders = [];
+    order_item_1.OrderItem.find({ relations: ['orderid', 'prodid'] })
+        .then(ord => {
+        ord.forEach(singleOrd => {
+            orders.push({
+                id: singleOrd.id,
+                products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
+            });
+        });
+        res.render('shop/orders', {
+            path: '/orders',
+            pageTitle: 'Your Orders',
+            orders: orders,
+        });
+    })
+        .catch(console.log);
 };
 const postOrder = (req, res, _next) => {
     user_1.User.find({ select: ['id'] })

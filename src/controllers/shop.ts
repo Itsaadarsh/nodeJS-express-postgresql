@@ -108,8 +108,28 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
   }, 300);
 };
 
+interface OrderItems {
+  id: number;
+  products: [{ title: string; qty: number }];
+}
+
 const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  res.redirect('/');
+  const orders: OrderItems[] = [];
+  OrderItem.find({ relations: ['orderid', 'prodid'] })
+    .then(ord => {
+      ord.forEach(singleOrd => {
+        orders.push({
+          id: singleOrd.id,
+          products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
+        });
+      });
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders: orders,
+      });
+    })
+    .catch(console.log);
 };
 
 const postOrder = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
