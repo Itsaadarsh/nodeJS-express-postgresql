@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderItem = void 0;
 const typeorm_1 = require("typeorm");
+const order_1 = require("./order");
+const product_1 = require("./product");
 let OrderItem = class OrderItem extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -21,6 +23,16 @@ __decorate([
     typeorm_1.Column('smallint', { nullable: false }),
     __metadata("design:type", Number)
 ], OrderItem.prototype, "quantity", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => order_1.Order, order => order.oItem, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
+    typeorm_1.JoinColumn({ name: 'orderid' }),
+    __metadata("design:type", order_1.Order)
+], OrderItem.prototype, "orderid", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => product_1.Product, prod => prod.cItem, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
+    typeorm_1.JoinColumn({ name: 'productid' }),
+    __metadata("design:type", product_1.Product)
+], OrderItem.prototype, "prodid", void 0);
 OrderItem = __decorate([
     typeorm_1.Entity()
 ], OrderItem);

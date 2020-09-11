@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const typeorm_1 = require("typeorm");
 const cart_item_1 = require("./cart-item");
+const order_item_1 = require("./order-item");
 const user_1 = require("./user");
 let Product = class Product extends typeorm_1.BaseEntity {
 };
@@ -44,6 +45,10 @@ __decorate([
     typeorm_1.OneToMany(() => cart_item_1.CartItem, cItem => cItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
     __metadata("design:type", Array)
 ], Product.prototype, "cItem", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => order_item_1.OrderItem, oItem => oItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
+    __metadata("design:type", Array)
+], Product.prototype, "oItem", void 0);
 Product = __decorate([
     typeorm_1.Entity()
 ], Product);

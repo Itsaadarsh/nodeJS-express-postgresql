@@ -8,6 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { CartItem } from './cart-item';
+import { OrderItem } from './order-item';
 import { User } from './user';
 
 @Entity()
@@ -33,4 +34,7 @@ export class Product extends BaseEntity {
 
   @OneToMany(() => CartItem, cItem => cItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   cItem: CartItem[];
+
+  @OneToMany(() => OrderItem, oItem => oItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  oItem: OrderItem[];
 }

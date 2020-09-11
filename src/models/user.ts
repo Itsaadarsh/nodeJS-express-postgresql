@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, OneToOne } from 'typeorm';
 import { Product } from './product';
 import { Cart } from './cart';
+import { Order } from './order';
 
 @Entity()
 export class User extends BaseEntity {
@@ -18,4 +19,7 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Cart, cart => cart.userid)
   cartid = Cart;
+
+  @OneToMany(() => Order, ord => ord.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  ordid: Order[];
 }
