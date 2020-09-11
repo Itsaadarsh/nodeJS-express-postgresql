@@ -112,7 +112,7 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 //   });
 // };
 
-const postOrder = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {};
+const postOrder = (_req: express.Request, _res: express.Response, _next: express.NextFunction) => {};
 
 export default module.exports = {
   getHome,

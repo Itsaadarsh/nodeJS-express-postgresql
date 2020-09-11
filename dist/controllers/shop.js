@@ -95,7 +95,7 @@ const postDeleteCart = (req, res, _next) => {
         res.redirect('/cart');
     }, 300);
 };
-const postOrder = (_req, res, _next) => { };
+const postOrder = (_req, _res, _next) => { };
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,
