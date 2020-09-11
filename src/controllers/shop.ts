@@ -55,7 +55,7 @@ const getCart = (_req: express.Request, res: express.Response, _next: express.Ne
   CartItem.find({ relations: ['prodid'] })
     .then(citem => {
       citem.forEach(item => {
-        product.push({ id: item.prodid.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
+        product.push({ id: item.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
       });
       res.render('shop/cart', {
         path: '/cart',
@@ -67,7 +67,7 @@ const getCart = (_req: express.Request, res: express.Response, _next: express.Ne
 };
 
 const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  const prodID = req.body.productId;
+  const prodID: number = +req.body.productId;
   CartItem.find({ relations: ['prodid'], where: { prodid: { id: prodID } } })
     .then(avaiProd => {
       if (avaiProd.length === 0) {
@@ -97,17 +97,13 @@ const postCart = (req: express.Request, res: express.Response, _next: express.Ne
     .catch(console.log);
 };
 
-// const postDeleteCart = (
-//   req: express.Request,
-//   res: express.Response,
-//   _next: express.NextFunction
-// ) => {
-//   const prodId: string = req.body.productId;
-//   Product.Products.findById(prodId, (prods: Item) => {
-//     Cart.Cart.deleteCart(prodId, prods.price);
-//   });
-//   res.redirect('/cart');
-// };
+const postDeleteCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const prodId: number = +req.body.productId;
+  CartItem.delete({ id: prodId });
+  setTimeout(() => {
+    res.redirect('/cart');
+  }, 300);
+};
 
 // const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
 //   res.render('shop/orders', {
@@ -131,5 +127,5 @@ export default module.exports = {
   //   getCheckout,
   getProduct,
   postCart,
-  //   postDeleteCart,
+  postDeleteCart,
 };

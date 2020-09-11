@@ -47,7 +47,7 @@ const getCart = (_req, res, _next) => {
     cart_item_1.CartItem.find({ relations: ['prodid'] })
         .then(citem => {
         citem.forEach(item => {
-            product.push({ id: item.prodid.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
+            product.push({ id: item.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
         });
         res.render('shop/cart', {
             path: '/cart',
@@ -58,7 +58,7 @@ const getCart = (_req, res, _next) => {
         .catch(console.log);
 };
 const postCart = (req, res, _next) => {
-    const prodID = req.body.productId;
+    const prodID = +req.body.productId;
     cart_item_1.CartItem.find({ relations: ['prodid'], where: { prodid: { id: prodID } } })
         .then(avaiProd => {
         if (avaiProd.length === 0) {
@@ -88,11 +88,19 @@ const postCart = (req, res, _next) => {
     })
         .catch(console.log);
 };
+const postDeleteCart = (req, res, _next) => {
+    const prodId = +req.body.productId;
+    cart_item_1.CartItem.delete({ id: prodId });
+    setTimeout(() => {
+        res.redirect('/cart');
+    }, 300);
+};
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,
     getCart,
     getProduct,
     postCart,
+    postDeleteCart,
 };
 //# sourceMappingURL=shop.js.map
