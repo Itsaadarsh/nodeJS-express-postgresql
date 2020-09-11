@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "handlebars": "^4.7.6",
     "pg": "^8.3.3",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.25",
