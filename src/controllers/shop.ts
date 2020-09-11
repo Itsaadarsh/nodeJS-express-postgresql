@@ -112,19 +112,14 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 //   });
 // };
 
-// const getCheckout = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-//   res.render('shop/checkout', {
-//     path: '/checkout',
-//     pageTitle: 'CHECKOUT',
-//   });
-// };
+const postOrder = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {};
 
 export default module.exports = {
   getHome,
   getProducts,
   getCart,
   //   getOrders,
-  //   getCheckout,
+  postOrder,
   getProduct,
   postCart,
   postDeleteCart,
