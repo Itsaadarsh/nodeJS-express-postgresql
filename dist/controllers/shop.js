@@ -4,6 +4,8 @@ exports.getHome = void 0;
 const cart_1 = require("../models/cart");
 const product_1 = require("../models/product");
 const cart_item_1 = require("../models/cart-item");
+const order_1 = require("../models/order");
+const user_1 = require("../models/user");
 exports.getHome = (_req, res, _next) => {
     product_1.Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
         .then(products => {
@@ -95,7 +97,17 @@ const postDeleteCart = (req, res, _next) => {
         res.redirect('/cart');
     }, 300);
 };
-const postOrder = (_req, _res, _next) => { };
+const postOrder = (_req, res, _next) => {
+    user_1.User.find({ select: ['id'] })
+        .then(userId => {
+        const order = new order_1.Order();
+        order.userid = userId[userId.length - 1];
+        order.save();
+        product_1.Product.find();
+    })
+        .catch(console.log);
+    res.redirect('/cart');
+};
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,

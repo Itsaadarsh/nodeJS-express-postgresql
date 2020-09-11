@@ -10,7 +10,7 @@ export class CartItem extends BaseEntity {
   @Column('smallint', { nullable: false })
   quantity: number;
 
-  @ManyToOne(() => Cart, cart => cart.cItem)
+  @ManyToOne(() => Cart, cart => cart.cItem, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'cartid' })
   cartid: Cart;
 

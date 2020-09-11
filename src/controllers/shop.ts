@@ -2,6 +2,9 @@ import { Cart } from '../models/cart';
 import { Product } from '../models/product';
 import express from 'express';
 import { CartItem } from '../models/cart-item';
+import { Order } from '../models/order';
+import { User } from '../models/user';
+import { OrderItem } from '../models/order-item';
 
 export const getHome = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   Product.find({ select: ['title', 'imageUrl', 'price', 'description', 'id'] })
@@ -112,7 +115,21 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 //   });
 // };
 
-const postOrder = (_req: express.Request, _res: express.Response, _next: express.NextFunction) => {};
+const postOrder = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  User.find({ select: ['id'] })
+    .then(userId => {
+      const order = new Order();
+      order.userid = userId[userId.length - 1];
+      order.save();
+      Product.find();
+      // const orderQty: number = +req.body.qty;
+      // const orderItem = new OrderItem();
+      // orderItem.quantity = orderQty;
+      // orderItem.orderid =
+    })
+    .catch(console.log);
+  res.redirect('/cart');
+};
 
 export default module.exports = {
   getHome,
