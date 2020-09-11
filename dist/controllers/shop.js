@@ -42,28 +42,56 @@ const getProduct = (req, res, _next) => {
     })
         .catch(err => console.log(err));
 };
+const getCart = (_req, res, _next) => {
+    const product = [];
+    cart_item_1.CartItem.find({ relations: ['prodid'] })
+        .then(citem => {
+        citem.forEach(item => {
+            product.push({ id: item.prodid.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
+        });
+        res.render('shop/cart', {
+            path: '/cart',
+            pageTitle: 'Your Cart',
+            products: product,
+        });
+    })
+        .catch(console.log);
+};
 const postCart = (req, res, _next) => {
     const prodID = req.body.productId;
-    console.log(prodID);
-    product_1.Product.findOne({ where: { id: prodID } })
-        .then(prod => {
-        cart_1.Cart.find({ select: ['id'] })
-            .then(cart => {
-            const defQty = 1;
-            const cartitem = new cart_item_1.CartItem();
-            cartitem.quantity = defQty;
-            cartitem.cartid = cart[cart.length - 1];
-            cartitem.prodid = prod;
-            cartitem.save();
-            res.redirect('/cart');
-        })
-            .catch(console.log);
+    cart_item_1.CartItem.find({ relations: ['prodid'], where: { prodid: { id: prodID } } })
+        .then(avaiProd => {
+        if (avaiProd.length === 0) {
+            product_1.Product.findOne({ where: { id: prodID } })
+                .then(prod => {
+                cart_1.Cart.find({ select: ['id'] })
+                    .then(cart => {
+                    const defQty = 1;
+                    const cartitem = new cart_item_1.CartItem();
+                    cartitem.quantity = defQty;
+                    cartitem.cartid = cart[cart.length - 1];
+                    cartitem.prodid = prod;
+                    cartitem.save();
+                    res.redirect('/cart');
+                })
+                    .catch(console.log);
+            })
+                .catch(console.log);
+        }
+        else {
+            const updateQty = avaiProd[0].quantity + 1;
+            cart_item_1.CartItem.update({ id: avaiProd[0].id }, { quantity: updateQty });
+            setTimeout(() => {
+                res.redirect('/cart');
+            }, 500);
+        }
     })
         .catch(console.log);
 };
 exports.default = module.exports = {
     getHome: exports.getHome,
     getProducts,
+    getCart,
     getProduct,
     postCart,
 };

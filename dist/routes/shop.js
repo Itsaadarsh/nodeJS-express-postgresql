@@ -9,6 +9,7 @@ const shop_1 = __importDefault(require("../controllers/shop"));
 router.get('/', shop_1.default.getHome);
 router.get('/products', shop_1.default.getProducts);
 router.get('/products/:productId', shop_1.default.getProduct);
+router.get('/cart', shop_1.default.getCart);
 router.post('/cart', shop_1.default.postCart);
 exports.default = module.exports = router;
 //# sourceMappingURL=shop.js.map

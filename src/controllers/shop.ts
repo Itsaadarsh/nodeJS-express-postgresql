@@ -44,41 +44,55 @@ const getProduct = (req: express.Request, res: express.Response, _next: express.
     .catch(err => console.log(err));
 };
 
-// const getCart = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-//   Cart.Cart.getCart((cart: CartInterface) => {
-//     Product.Products.fetchAll((prods: Item[]) => {
-//       const cartPro = [];
-//       for (const pro of prods) {
-//         const proData = cart.products.find(p => p.id === pro.id);
-//         if (proData) {
-//           cartPro.push({ productData: pro, qty: proData.qty });
-//         }
-//       }
-//       res.render('shop/cart', {
-//         path: '/cart',
-//         pageTitle: 'Your Cart',
-//         products: cartPro,
-//       });
-//     });
-//   });
-// };
+interface CartItems {
+  id: number;
+  title: string;
+  cartItem: { quantity: number };
+}
+
+const getCart = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  const product: CartItems[] = [];
+  CartItem.find({ relations: ['prodid'] })
+    .then(citem => {
+      citem.forEach(item => {
+        product.push({ id: item.prodid.id, title: item.prodid.title, cartItem: { quantity: item.quantity } });
+      });
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products: product,
+      });
+    })
+    .catch(console.log);
+};
 
 const postCart = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodID = req.body.productId;
-  console.log(prodID);
-  Product.findOne({ where: { id: prodID } })
-    .then(prod => {
-      Cart.find({ select: ['id'] })
-        .then(cart => {
-          const defQty = 1;
-          const cartitem = new CartItem();
-          cartitem.quantity = defQty;
-          cartitem.cartid = cart[cart.length - 1];
-          cartitem.prodid = prod as Product;
-          cartitem.save();
+  CartItem.find({ relations: ['prodid'], where: { prodid: { id: prodID } } })
+    .then(avaiProd => {
+      if (avaiProd.length === 0) {
+        Product.findOne({ where: { id: prodID } })
+          .then(prod => {
+            Cart.find({ select: ['id'] })
+              .then(cart => {
+                const defQty = 1;
+                const cartitem = new CartItem();
+                cartitem.quantity = defQty;
+                cartitem.cartid = cart[cart.length - 1];
+                cartitem.prodid = prod as Product;
+                cartitem.save();
+                res.redirect('/cart');
+              })
+              .catch(console.log);
+          })
+          .catch(console.log);
+      } else {
+        const updateQty = avaiProd[0].quantity + 1;
+        CartItem.update({ id: avaiProd[0].id }, { quantity: updateQty });
+        setTimeout(() => {
           res.redirect('/cart');
-        })
-        .catch(console.log);
+        }, 500);
+      }
     })
     .catch(console.log);
 };
@@ -112,7 +126,7 @@ const postCart = (req: express.Request, res: express.Response, _next: express.Ne
 export default module.exports = {
   getHome,
   getProducts,
-  // getCart,
+  getCart,
   //   getOrders,
   //   getCheckout,
   getProduct,
