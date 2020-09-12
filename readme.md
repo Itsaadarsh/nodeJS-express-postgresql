@@ -1,4 +1,4 @@
-# E-Commerce Site Template
+# E-Commerce Website Template
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Itsaadarsh/nodeJS-express-postgreSQL/blob/master/LICENSE)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Itsaadarsh/nodeJS-express-postgreSQL)
