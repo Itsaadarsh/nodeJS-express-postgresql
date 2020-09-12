@@ -11,6 +11,6 @@ export class Cart extends BaseEntity {
   @JoinColumn({ name: 'userid' })
   userid: User;
 
-  @OneToMany(() => CartItem, cartitem => cartitem.cartid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  @OneToMany(() => CartItem, cartitem => cartitem.cartid)
   cItem: CartItem[];
 }

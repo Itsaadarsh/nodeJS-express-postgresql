@@ -7,10 +7,10 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @OneToMany(() => OrderItem, orderitem => orderitem.orderid)
+  oItem: OrderItem[];
+
   @ManyToOne(() => User, user => user.ordid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ referencedColumnName: 'id', name: 'userid' })
   userid: User;
-
-  @OneToMany(() => OrderItem, orderitem => orderitem.orderid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
-  oItem: OrderItem[];
 }

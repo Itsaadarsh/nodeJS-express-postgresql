@@ -37,18 +37,18 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 __decorate([
+    typeorm_1.OneToMany(() => cart_item_1.CartItem, cItem => cItem.prodid),
+    __metadata("design:type", Array)
+], Product.prototype, "cItem", void 0);
+__decorate([
+    typeorm_1.OneToMany(() => order_item_1.OrderItem, oItem => oItem.prodid),
+    __metadata("design:type", Array)
+], Product.prototype, "oItem", void 0);
+__decorate([
     typeorm_1.ManyToOne(() => user_1.User, user => user.prodId, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
     typeorm_1.JoinColumn({ referencedColumnName: 'id', name: 'userid' }),
     __metadata("design:type", user_1.User)
 ], Product.prototype, "userid", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => cart_item_1.CartItem, cItem => cItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
-    __metadata("design:type", Array)
-], Product.prototype, "cItem", void 0);
-__decorate([
-    typeorm_1.OneToMany(() => order_item_1.OrderItem, oItem => oItem.prodid, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
-    __metadata("design:type", Array)
-], Product.prototype, "oItem", void 0);
 Product = __decorate([
     typeorm_1.Entity()
 ], Product);

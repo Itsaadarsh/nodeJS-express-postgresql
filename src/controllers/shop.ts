@@ -103,12 +103,12 @@ const postDeleteCart = (req: express.Request, res: express.Response, _next: expr
 
 const getOrders = (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const orders: OrderItems[] = [];
-  OrderItem.find({ relations: ['orderid', 'prodid'] })
+  OrderItem.find({ relations: ['orderid', 'prodid'], order: { id: 'ASC' } })
     .then(ord => {
       ord.forEach(singleOrd => {
         orders.push({
           id: singleOrd.id,
-          products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
+          products: [{ title: singleOrd.prodTitle, qty: singleOrd.quantity }],
         });
       });
       res.render('shop/orders', {
@@ -136,14 +136,15 @@ const postOrder = (_req: express.Request, res: express.Response, _next: express.
                 cItem.forEach(oItem => {
                   const orderItem = new OrderItem();
                   orderItem.quantity = oItem.quantity;
+                  orderItem.prodTitle = oItem.prodid.title;
                   orderItem.orderid = ord[0];
                   orderItem.prodid = oItem.prodid;
                   orderItem.save();
                   CartItem.delete({ cartid: userID });
-                  setTimeout(() => {
-                    res.redirect('/orders');
-                  }, 300);
                 });
+                setTimeout(() => {
+                  res.redirect('/orders');
+                }, 300);
               })
               .catch(console.log);
           })

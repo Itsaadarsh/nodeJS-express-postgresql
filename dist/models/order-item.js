@@ -24,12 +24,16 @@ __decorate([
     __metadata("design:type", Number)
 ], OrderItem.prototype, "quantity", void 0);
 __decorate([
+    typeorm_1.Column('varchar', { nullable: false, length: 100 }),
+    __metadata("design:type", String)
+], OrderItem.prototype, "prodTitle", void 0);
+__decorate([
     typeorm_1.ManyToOne(() => order_1.Order, order => order.oItem, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
     typeorm_1.JoinColumn({ name: 'orderid' }),
     __metadata("design:type", order_1.Order)
 ], OrderItem.prototype, "orderid", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => product_1.Product, prod => prod.cItem, { onDelete: 'CASCADE', onUpdate: 'CASCADE' }),
+    typeorm_1.ManyToOne(() => product_1.Product, prod => prod.cItem, { onDelete: 'SET NULL', onUpdate: 'CASCADE' }),
     typeorm_1.JoinColumn({ name: 'productid' }),
     __metadata("design:type", product_1.Product)
 ], OrderItem.prototype, "prodid", void 0);

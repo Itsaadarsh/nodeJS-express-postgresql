@@ -63,14 +63,18 @@ const postEditProduct = (req, res, _next) => {
             price: req.body.price,
             description: req.body.description,
         });
-        res.redirect('/admin/products');
+        setTimeout(() => {
+            res.redirect('/admin/products');
+        }, 500);
     }
 };
 const postDeleteProduct = (req, res, _next) => {
     const prodId = +req.body.productId;
     if (typeof prodId === 'number') {
         product_1.Product.delete({ id: prodId });
-        res.redirect('/admin/products');
+        setTimeout(() => {
+            res.redirect('/admin/products');
+        }, 500);
     }
 };
 exports.default = module.exports = {

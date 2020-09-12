@@ -17,9 +17,9 @@ export class User extends BaseEntity {
   @OneToOne(() => Cart, cart => cart.userid)
   cartid = Cart;
 
-  @OneToMany(() => Product, prod => prod.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  @OneToMany(() => Product, prod => prod.userid)
   prodId: Product[];
 
-  @OneToMany(() => Order, ord => ord.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
+  @OneToMany(() => Order, ord => ord.userid)
   ordid: Order[];
 }

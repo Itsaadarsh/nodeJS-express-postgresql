@@ -68,7 +68,9 @@ const postEditProduct = (req: express.Request, res: express.Response, _next: exp
         description: req.body.description,
       }
     );
-    res.redirect('/admin/products');
+    setTimeout(() => {
+      res.redirect('/admin/products');
+    }, 500);
   }
 };
 
@@ -76,7 +78,9 @@ const postDeleteProduct = (req: express.Request, res: express.Response, _next: e
   const prodId: number = +req.body.productId;
   if (typeof prodId === 'number') {
     Product.delete({ id: prodId });
-    res.redirect('/admin/products');
+    setTimeout(() => {
+      res.redirect('/admin/products');
+    }, 500);
   }
 };
 

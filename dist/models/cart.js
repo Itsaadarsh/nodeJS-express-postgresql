@@ -25,7 +25,7 @@ __decorate([
     __metadata("design:type", user_1.User)
 ], Cart.prototype, "userid", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => cart_item_1.CartItem, cartitem => cartitem.cartid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
+    typeorm_1.OneToMany(() => cart_item_1.CartItem, cartitem => cartitem.cartid),
     __metadata("design:type", Array)
 ], Cart.prototype, "cItem", void 0);
 Cart = __decorate([

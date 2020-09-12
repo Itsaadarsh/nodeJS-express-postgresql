@@ -37,11 +37,11 @@ __decorate([
     __metadata("design:type", Object)
 ], User.prototype, "cartid", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => product_1.Product, prod => prod.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
+    typeorm_1.OneToMany(() => product_1.Product, prod => prod.userid),
     __metadata("design:type", Array)
 ], User.prototype, "prodId", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => order_1.Order, ord => ord.userid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
+    typeorm_1.OneToMany(() => order_1.Order, ord => ord.userid),
     __metadata("design:type", Array)
 ], User.prototype, "ordid", void 0);
 User = __decorate([

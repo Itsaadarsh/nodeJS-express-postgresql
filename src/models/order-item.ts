@@ -10,11 +10,14 @@ export class OrderItem extends BaseEntity {
   @Column('smallint', { nullable: false })
   quantity: number;
 
+  @Column('varchar', { nullable: false, length: 100 })
+  prodTitle: string;
+
   @ManyToOne(() => Order, order => order.oItem, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'orderid' })
   orderid: Order;
 
-  @ManyToOne(() => Product, prod => prod.cItem, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => Product, prod => prod.cItem, { onDelete: 'SET NULL', onUpdate: 'CASCADE' })
   @JoinColumn({ name: 'productid' })
   prodid: Product;
 }
