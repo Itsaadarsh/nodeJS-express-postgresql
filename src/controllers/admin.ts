@@ -20,7 +20,9 @@ const postAddProduct = (req: express.Request, res: express.Response, _next: expr
       product.description = req.body.description;
       product.userid = userID[userID.length - 1];
       Product.save(product);
-      res.redirect('/');
+      setTimeout(() => {
+        res.redirect('/');
+      }, 500);
     })
     .catch(console.log);
 };

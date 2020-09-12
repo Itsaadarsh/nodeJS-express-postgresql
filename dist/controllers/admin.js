@@ -19,7 +19,9 @@ const postAddProduct = (req, res, _next) => {
         product.description = req.body.description;
         product.userid = userID[userID.length - 1];
         product_1.Product.save(product);
-        res.redirect('/');
+        setTimeout(() => {
+            res.redirect('/');
+        }, 500);
     })
         .catch(console.log);
 };

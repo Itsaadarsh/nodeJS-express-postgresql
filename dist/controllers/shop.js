@@ -71,7 +71,9 @@ const postCart = (req, res, _next) => {
                     cartitem.cartid = cart[cart.length - 1];
                     cartitem.prodid = prod;
                     cartitem.save();
-                    res.redirect('/cart');
+                    setTimeout(() => {
+                        res.redirect('/cart');
+                    }, 500);
                 })
                     .catch(console.log);
             })
@@ -100,7 +102,7 @@ const getOrders = (_req, res, _next) => {
         .then(ord => {
         ord.forEach(singleOrd => {
             orders.push({
-                id: singleOrd.orderid.id,
+                id: singleOrd.id,
                 products: [{ title: singleOrd.prodid.title, qty: singleOrd.quantity }],
             });
         });
@@ -131,13 +133,15 @@ const postOrder = (_req, res, _next) => {
                         orderItem.prodid = oItem.prodid;
                         orderItem.save();
                         cart_item_1.CartItem.delete({ cartid: userID });
+                        setTimeout(() => {
+                            res.redirect('/orders');
+                        }, 300);
                     });
                 })
                     .catch(console.log);
             })
                 .catch(console.log);
-            res.redirect('/orders');
-        }, 1000);
+        }, 700);
     })
         .catch(console.log);
 };
