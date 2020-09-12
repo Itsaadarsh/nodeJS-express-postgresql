@@ -7,7 +7,7 @@ export class Cart extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, user => user.cartid)
+  @OneToOne(() => User, user => user.cartid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userid' })
   userid: User;
 

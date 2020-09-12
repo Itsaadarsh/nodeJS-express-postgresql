@@ -20,7 +20,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Cart.prototype, "id", void 0);
 __decorate([
-    typeorm_1.OneToOne(() => user_1.User, user => user.cartid),
+    typeorm_1.OneToOne(() => user_1.User, user => user.cartid, { onUpdate: 'CASCADE', onDelete: 'CASCADE' }),
     typeorm_1.JoinColumn({ name: 'userid' }),
     __metadata("design:type", user_1.User)
 ], Cart.prototype, "userid", void 0);
