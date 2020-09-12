@@ -16,10 +16,9 @@ createConnection()
     app.use(express.static('dist'));
 
     app.use('/user', userRoute.router);
+    app.use(homeRouter);
 
     app.use('/admin', adminData.router);
-
-    app.use(homeRouter);
 
     app.use(errorRoute.error404);
 
