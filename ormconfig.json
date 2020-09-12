@@ -1,0 +1,11 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "rootadmin",
+  "database": "e-commerce",
+  "synchronize": true,
+  "dropSchema": false,
+  "entities": ["dist/models/**/*.js"]
+}
