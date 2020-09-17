@@ -43,6 +43,7 @@ This project will run on **Express** using **PostgreSQL** as database. Project i
 ### Running server locally
 
 ```
+npm install
 npm start
 ```
 
