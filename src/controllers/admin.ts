@@ -14,12 +14,14 @@ const postAddProduct = (req: express.Request, res: express.Response, _next: expr
   User.find({ select: ['id'] })
     .then(userID => {
       const product = new Product();
-      product.title = req.body.title;
-      product.imageUrl = req.body.imageUrl;
-      product.price = req.body.price;
-      product.description = req.body.description;
-      product.userid = userID[userID.length - 1];
-      Product.save(product);
+      const { title, imageUrl, price, description } = req.body;
+      Product.save({
+        title,
+        imageUrl,
+        price,
+        description,
+        userid: userID[userID.length - 1],
+      });
       setTimeout(() => {
         res.redirect('/');
       }, 500);
@@ -41,7 +43,7 @@ const getProducts = (_req: express.Request, res: express.Response, _next: expres
 
 const getEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodId = +req.params.productId;
-  const edit = req.query.edit;
+  const { edit } = req.query;
   if (edit === 'false') res.redirect('/');
   Product.findOne({ id: +prodId })
     .then(prod => {
@@ -59,13 +61,14 @@ const getEditProduct = (req: express.Request, res: express.Response, _next: expr
 const postEditProduct = (req: express.Request, res: express.Response, _next: express.NextFunction) => {
   const prodId: number = +req.body.productId;
   if (typeof prodId === 'number') {
+    const { title, imageUrl, price, description } = req.body;
     Product.update(
       { id: prodId },
       {
-        title: req.body.title,
-        imageUrl: req.body.imageUrl,
-        price: req.body.price,
-        description: req.body.description,
+        title,
+        imageUrl,
+        price,
+        description,
       }
     );
     setTimeout(() => {
